@@ -1,98 +1,153 @@
-# FINKI HUB
+# FINKI Hub Homepage
 
-Official landing page for the student-lead community of the Faculty of Computer Science and Engineering. 
-Built with AngularJS (component-based) and styled using Tailwind CSS and Font Awesome.
+The unofficial student platform for the Faculty of Computer Science and Engineering (FINKI) in Skopje. Built with **Solid.js** and **Vite** for speed and simplicity.
 
----
+## Features
 
-## Prerequisites
+- 🌍 **Multi-language support** - English and Macedonian translations
+- 🎨 **Dark/Light theme** - Toggle between light and dark modes
+- ⚡ **Lightning fast** - Built with Solid.js and Vite
+- 📱 **Fully responsive** - Mobile-first design with Tailwind CSS
+- 🎯 **Static SPA** - Client-side routing, deployable anywhere
 
-Before you begin, ensure you have the following software installed:
+## Tech Stack
 
-* **Node.js**: Version **v20.x** or higher.
-* **npm**: Version **10.x** or higher (comes bundled with Node.js).
-* **Angular CLI**: The Angular Command Line Interface.
-    * This project specifically used **Angular CLI version 20.3.2**.
+- **Framework**: [Solid.js](https://solidjs.com) - Lightweight reactive UI library
+- **Build Tool**: [Vite](https://vitejs.dev) - Next generation frontend tooling
+- **Styling**: [Tailwind CSS](https://tailwindcss.com) - Utility-first CSS framework
+- **Icons**: [Font Awesome](https://fontawesome.com) - Icon library
+- **Language**: [TypeScript](https://www.typescriptlang.org) - Type-safe JavaScript
 
----
+## Getting Started
 
-## Running with Docker Compose
+### Installation
 
-This project is set up for containerization, ensuring a consistent and reproducible environment.
+```bash
+npm install
+```
 
----
+### Development
 
-### Local Development (Build from Dockerfile)
+```bash
+npm run dev
+```
 
-**Build & Run** `docker compose -f compose.yaml up --build` 
+Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
 
-*Note: `compose.yaml` builds and tags the image as `ghcr.io/finki-hub/homepage:local`.*
+### Build for Production
 
----
+```bash
+npm run build
+```
 
-### Production Deployment (Pull from GHCR)
+The build artifacts will be generated in the `dist` folder.
 
+### Preview Production Build
 
-1. **Login**: `docker login ghcr.io` 
-2. **Deploy**: `docker compose -f compose.prod.yaml up -d` 
+```bash
+npm run preview
+```
 
-*Note: `compose.prod.yaml` pulls `ghcr.io/finki-hub/homepage:latest`. Adjust the image tag in this file if using commit SHAs or other tags.*
+## Project Structure
 
-You can access the website through `http://localhost`
+```
+src/
+├── components/          # Reusable components
+│   ├── Header.tsx      # Hero section with CTAs
+│   ├── About.tsx       # Features section
+│   ├── Github.tsx      # GitHub contribution section
+│   ├── FAQ.tsx         # FAQ section
+│   ├── Footer.tsx      # Footer
+│   └── FontAwesomeIcon.tsx  # Icon wrapper
+├── services/           # Business logic
+│   ├── languageService.ts   # i18n management
+│   └── themeService.ts      # Theme management
+├── App.tsx            # Main app component
+├── index.tsx          # Entry point
+└── index.css          # Global styles
 
-## Installation
+public/
+└── i18n/              # Translation files
+    ├── en.json        # English translations
+    └── mk.json        # Macedonian translations
+```
 
-Follow these steps to set up the project locally:
+## Deployment
 
-1.  **Install the Angular CLI (if you haven't already):**
-    ```bash
-    npm install -g @angular/cli
-    ```
+### Cloudflare Pages
 
-2.  **Install project dependencies:**
-    Navigate to the project directory and run the following command to download all required packages:
-    ```bash
-    npm install
-    # or the shorthand: npm i
-    ```
+This project is set up for automatic deployment to Cloudflare Pages via GitHub Actions.
 
----
+**Requirements:**
 
-## Development Server
+1. GitHub repository secrets:
 
-To start a local development server for testing:
+   - `CLOUDFLARE_API_TOKEN` - Cloudflare API token with Pages edit permission
+   - `CLOUDFLARE_ACCOUNT_ID` - Your Cloudflare account ID
 
-1.  **Run the serve command:**
-    ```bash
-    ng serve
-    ```
-2.  **Access the application:**
-    Open your browser and navigate to `http://localhost:4200/`.
+2. The workflow will automatically:
+   - Build the project on push to `main`
+   - Deploy to Cloudflare Pages
 
-The application will automatically reload whenever you modify any of the source files.
+See `.github/workflows/deploy.yml` for workflow details.
 
----
+### Other Platforms
 
-## Building the Project
+For other hosting platforms, simply deploy the contents of the `dist` folder:
 
-To build the project for deployment or production:
+- **Netlify**: Drop `dist` folder
+- **Vercel**: Connect GitHub repo and set build command to `npm run build`
+- **GitHub Pages**: Deploy `dist` folder to `gh-pages` branch
 
-1.  **Run the build command:**
-    ```bash
-    ng build
-    ```
-    To create an optimized production build, use the `--configuration production` (or simply `-c production`) flag:
-    ```bash
-    ng build --configuration production
-    ```
+## Available Scripts
 
-2.  **Output:**
-    This process compiles your project and stores the build artifacts (static files) in the `dist/` directory.
-    The `browser/` directory is for the client-side code that runs in the browser.
-    The `server/` is for the server-side code used for Node.js-based SSR.
+| Script            | Description                      |
+| ----------------- | -------------------------------- |
+| `npm run dev`     | Start development server         |
+| `npm run build`   | Build for production             |
+| `npm run preview` | Preview production build locally |
 
----
+## Internationalization (i18n)
+
+Translations are stored in JSON files in `public/i18n/`:
+
+- `en.json` - English
+- `mk.json` - Македонски
+
+To add a new translation, use the `t()` function from `languageService`:
+
+```typescript
+const { t } = createLanguageService();
+
+<h1>{t('HEADER.TITLE')}</h1>;
+```
+
+## Theme Management
+
+The app supports light and dark modes. Theme preference is stored in localStorage.
+
+```typescript
+const { theme, toggleTheme } = createThemeService();
+
+<button onClick={toggleTheme}>Toggle Theme</button>;
+```
+
+## Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under the **MIT License** - see the `LICENSE` file for details.
+This project is unlicensed. See LICENSE file for details.
+
+## Resources
+
+- [FINKI Hub Discord](https://discord.com/invite/finki-studenti-810997107376914444)
+- [Study Materials](https://snimki.finki-hub.com/)
+- [GitHub Organization](https://github.com/finki-hub)

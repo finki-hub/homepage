@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+/* Custom FINKI Palette & Fonts */
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+.bg-finki-blue {
+  background-color: #0284c7;
+}
+
+.hover\:bg-finki-blue-dark:hover {
+  background-color: #0369a1;
+}
+
+.text-finki-blue {
+  color: #0284c7;
+}
+
+.border-finki-blue {
+  border-color: #0284c7;
+}
+
+.btn-gradient-blue {
+  background-image: linear-gradient(to right, #0284c7, #0369a1);
+}
+
+/* Light Mode Colors */
+body.light-mode {
+  background-color: #e2e8f0;
+  color: #0f172a;
+}
+
+body.light-mode .bg-section-1 {
+  background-color: #f1f5f9;
+}
+
+body.light-mode .bg-section-2 {
+  background-color: #e2e8f0;
+}
+
+body.light-mode .text-main {
+  color: #0f172a;
+}
+
+body.light-mode .text-secondary {
+  color: #334155;
+}
+
+body.light-mode .card-bg {
+  background-color: #f1f5f9;
+}
+
+body.light-mode .border-footer {
+  border-color: #cbd5e1;
+}
+
+/* Dark Mode Colors */
+body.dark-mode {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+body.dark-mode .bg-section-1 {
+  background-color: #1e293b;
+}
+
+body.dark-mode .bg-section-2 {
+  background-color: #0f172a;
+}
+
+body.dark-mode .text-main {
+  color: #e2e8f0;
+}
+
+body.dark-mode .text-secondary {
+  color: #94a3b8;
+}
+
+body.dark-mode .card-bg {
+  background-color: #1e293b;
+}
+
+body.dark-mode .border-footer {
+  border-color: #334155;
+}
+
+/* Responsive headings */
+h1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+/* Theme toggle button effects */
+#theme-toggle {
+  transition: transform 0.1s ease-in-out, background-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+}
+
+#theme-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#theme-toggle:active {
+  transform: scale(0.95);
+}

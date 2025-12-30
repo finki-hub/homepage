@@ -1,8 +1,0 @@
-name: finki-hub
-
-services:
-  site:
-    image: ghcr.io/finki-hub/homepage:latest
-    ports:
-      - "80:80"
-    restart: unless-stopped

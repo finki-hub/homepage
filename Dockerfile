@@ -1,25 +1,17 @@
-# STAGE 1
-
-FROM node:20-slim AS builder
-
+FROM --platform=${BUILDPLATFORM} node:24-alpine AS build
 WORKDIR /app
 
 COPY package.json package-lock.json ./
+RUN npm i --ignore-scripts
 
-RUN npm ci
+COPY . ./
+RUN npm run build
 
-COPY . .
+FROM nginx:alpine AS final
 
-RUN npm run build -- --configuration production
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+RUN rm -rf /usr/share/nginx/html/*
 
-# STAGE 2
+COPY --from=build /app/dist /usr/share/nginx/html
 
-FROM nginx:alpine
-
-COPY nginx-custom.conf /etc/nginx/conf.d/default.conf
-
-COPY --from=builder /app/dist/finki-hub/browser /usr/share/nginx/html
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
