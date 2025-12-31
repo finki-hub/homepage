@@ -1,10 +1,11 @@
-import { useApp } from '../context/AppContext';
-import { Show } from 'solid-js';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { Show } from 'solid-js';
+
+import { useApp } from '../context/AppContext';
 import { FontAwesomeIcon } from './FontAwesomeIcon';
 
-export function Github() {
-  const { t, isLoaded } = useApp();
+export const Github = () => {
+  const { isLoaded, t } = useApp();
 
   return (
     <section class="py-16 md:py-20 px-4 bg-section-1 transition-colors duration-500">
@@ -20,12 +21,15 @@ export function Github() {
             </p>
 
             <a
-              href="https://github.com/finki-hub"
-              target="_blank"
-              rel="noopener noreferrer"
               class="inline-flex items-center btn-gradient-blue text-white font-semibold py-4 px-12 rounded-full shadow-lg transition-transform duration-300 transform hover:scale-105"
+              href="https://github.com/finki-hub"
+              rel="noopener noreferrer"
+              target="_blank"
             >
-              <FontAwesomeIcon icon={faGithub} class="mr-2" />
+              <FontAwesomeIcon
+                class="mr-2"
+                icon={faGithub}
+              />
               {t('GITHUB_SECTION.BUTTON_TEXT')}
             </a>
           </div>
@@ -33,4 +37,4 @@ export function Github() {
       </div>
     </section>
   );
-}
+};

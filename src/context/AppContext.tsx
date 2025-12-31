@@ -1,23 +1,33 @@
-import { createContext, useContext, createSignal, onMount } from 'solid-js';
-import type { JSX } from 'solid-js';
+import {
+  createContext,
+  createSignal,
+  type JSX,
+  onMount,
+  useContext,
+} from 'solid-js';
 
 type Language = 'en' | 'mk';
-type Theme = 'light-mode' | 'dark-mode';
+type Theme = 'dark-mode' | 'light-mode';
+type Translations = Record<Language, Record<string, unknown>>;
 
 const LANG_KEY = 'app-lang';
 const THEME_KEY = 'app-theme';
 const DEFAULT_LANG: Language = 'mk';
 const DEFAULT_THEME: Theme = 'dark-mode';
 
-interface AppContextType {
-  lang: () => Language;
-  theme: () => Theme;
-  isLoaded: () => boolean;
-  t: (key: string) => string;
+const logError = (message: string, error: unknown) => {
+  console.error(message, error);
+};
+
+type AppContextType = {
   changeLanguage: (lang: Language) => void;
-  toggleTheme: () => void;
   getThemeIcon: () => string;
-}
+  isLoaded: () => boolean;
+  lang: () => Language;
+  t: (key: string) => string;
+  theme: () => Theme;
+  toggleTheme: () => void;
+};
 
 const AppContext = createContext<AppContextType>();
 
@@ -25,9 +35,9 @@ export const AppProvider = (props: { children: JSX.Element }) => {
   const [lang, setLang] = createSignal<Language>(DEFAULT_LANG);
   const [theme, setTheme] = createSignal<Theme>(DEFAULT_THEME);
   const [isLoaded, setIsLoaded] = createSignal(false);
-  const [translations, setTranslations] = createSignal<Record<Language, Record<string, any>>>({
+  const [translations, setTranslations] = createSignal<Translations>({
     en: {},
-    mk: {}
+    mk: {},
   });
 
   onMount(async () => {
@@ -35,13 +45,13 @@ export const AppProvider = (props: { children: JSX.Element }) => {
     try {
       const [enResponse, mkResponse] = await Promise.all([
         fetch('/i18n/en.json'),
-        fetch('/i18n/mk.json')
+        fetch('/i18n/mk.json'),
       ]);
-      const en = await enResponse.json();
-      const mk = await mkResponse.json();
+      const en = (await enResponse.json()) as Record<string, unknown>;
+      const mk = (await mkResponse.json()) as Record<string, unknown>;
       setTranslations({ en, mk });
     } catch (error) {
-      console.error('Failed to load translations:', error);
+      logError('Failed to load translations:', error);
     }
 
     // Initialize language from localStorage
@@ -74,29 +84,31 @@ export const AppProvider = (props: { children: JSX.Element }) => {
     localStorage.setItem(THEME_KEY, newTheme);
   };
 
-  const getThemeIcon = () => {
-    return theme() === 'light-mode' ? 'moon' : 'sun';
-  };
+  const getThemeIcon = () => (theme() === 'light-mode' ? 'moon' : 'sun');
 
   const t = (key: string): string => {
     const keys = key.split('.');
-    let value: any = translations()[lang()];
+    let value: unknown = translations()[lang()];
 
     for (const k of keys) {
-      value = value?.[k];
+      if (typeof value === 'object' && value !== null && k in value) {
+        value = (value as Record<string, unknown>)[k];
+      } else {
+        return key;
+      }
     }
 
-    return value || key;
+    return typeof value === 'string' ? value : key;
   };
 
   const contextValue: AppContextType = {
-    lang,
-    theme,
-    isLoaded,
-    t,
     changeLanguage,
+    getThemeIcon,
+    isLoaded,
+    lang,
+    t,
+    theme,
     toggleTheme,
-    getThemeIcon
   };
 
   return (

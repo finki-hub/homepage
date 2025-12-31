@@ -1,15 +1,16 @@
-import { useApp } from '../context/AppContext';
-import { Show } from 'solid-js';
 import {
-  faGraduationCap,
+  faBoxOpen,
   faChalkboardUser,
+  faGraduationCap,
   faUsers,
-  faBoxOpen
 } from '@fortawesome/free-solid-svg-icons';
+import { Show } from 'solid-js';
+
+import { useApp } from '../context/AppContext';
 import { FontAwesomeIcon } from './FontAwesomeIcon';
 
-export function About() {
-  const { t, isLoaded } = useApp();
+export const About = () => {
+  const { isLoaded, t } = useApp();
 
   return (
     <section class="py-16 md:py-20 px-4 bg-section-2 transition-colors duration-500">
@@ -66,4 +67,4 @@ export function About() {
       </div>
     </section>
   );
-}
+};

@@ -1,8 +1,8 @@
-import { Header } from './components/Header';
 import { About } from './components/About';
-import { Github } from './components/Github';
-import { FAQ } from './components/FAQ';
+import { Faq } from './components/Faq';
 import { Footer } from './components/Footer';
+import { Github } from './components/Github';
+import { Header } from './components/Header';
 import { AppProvider } from './context/AppContext';
 
 export default function App() {
@@ -11,7 +11,7 @@ export default function App() {
       <Header />
       <About />
       <Github />
-      <FAQ />
+      <Faq />
       <Footer />
     </AppProvider>
   );

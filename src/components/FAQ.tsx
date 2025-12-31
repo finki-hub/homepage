@@ -1,10 +1,11 @@
-import { useApp } from '../context/AppContext';
-import { Show } from 'solid-js';
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+import { Show } from 'solid-js';
+
+import { useApp } from '../context/AppContext';
 import { FontAwesomeIcon } from './FontAwesomeIcon';
 
-export function FAQ() {
-  const { t, isLoaded } = useApp();
+export const Faq = () => {
+  const { isLoaded, t } = useApp();
 
   return (
     <section class="py-16 md:py-20 px-4 bg-section-2 transition-colors duration-500">
@@ -20,7 +21,9 @@ export function FAQ() {
               <details class="card-bg rounded-lg p-6 shadow-md cursor-pointer transition-colors duration-500 group">
                 <summary class="text-xl font-semibold text-main focus:outline-none list-none flex justify-between items-center">
                   {t('FAQ_SECTION.Q1_SUMMARY')}
-                  <span class="text-finki-blue transition-transform duration-300 group-open:rotate-180">▼</span>
+                  <span class="text-finki-blue transition-transform duration-300 group-open:rotate-180">
+                    ▼
+                  </span>
                 </summary>
                 <p class="mt-4 text-secondary font-poppins">
                   {t('FAQ_SECTION.Q1_ANSWER')}
@@ -30,7 +33,9 @@ export function FAQ() {
               <details class="card-bg rounded-lg p-6 shadow-md cursor-pointer transition-colors duration-500 group">
                 <summary class="text-xl font-semibold text-main focus:outline-none list-none flex justify-between items-center">
                   {t('FAQ_SECTION.Q2_SUMMARY')}
-                  <span class="text-finki-blue transition-transform duration-300 group-open:rotate-180">▼</span>
+                  <span class="text-finki-blue transition-transform duration-300 group-open:rotate-180">
+                    ▼
+                  </span>
                 </summary>
                 <p class="mt-4 text-secondary font-poppins">
                   {t('FAQ_SECTION.Q2_ANSWER')}
@@ -40,7 +45,9 @@ export function FAQ() {
               <details class="card-bg rounded-lg p-6 shadow-md cursor-pointer transition-colors duration-500 group">
                 <summary class="text-xl font-semibold text-main focus:outline-none list-none flex justify-between items-center">
                   {t('FAQ_SECTION.Q3_SUMMARY')}
-                  <span class="text-finki-blue transition-transform duration-300 group-open:rotate-180">▼</span>
+                  <span class="text-finki-blue transition-transform duration-300 group-open:rotate-180">
+                    ▼
+                  </span>
                 </summary>
                 <p class="mt-4 text-secondary font-poppins">
                   {t('FAQ_SECTION.Q3_ANSWER')}
@@ -52,4 +59,4 @@ export function FAQ() {
       </div>
     </section>
   );
-}
+};
