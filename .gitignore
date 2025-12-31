@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 *.tsbuildinfo
+.eslintcache
 
 # Editor directories and files
 .idea
