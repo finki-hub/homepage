@@ -1,18 +1,28 @@
-import { About } from './components/About';
-import { Faq } from './components/Faq';
-import { Footer } from './components/Footer';
-import { Github } from './components/Github';
-import { Header } from './components/Header';
-import { AppProvider } from './context/AppContext';
+import { BackToTop } from '@/components/BackToTop';
+import { Community } from '@/components/Community';
+import { Contribute } from '@/components/Contribute';
+import { Footer } from '@/components/Footer';
+import { Header } from '@/components/Header';
+import { Hero } from '@/components/Hero';
+import { Overview } from '@/components/Overview';
+import { Projects } from '@/components/Projects';
+import { LanguageProvider } from '@/hooks/useLanguage';
 
-export default function App() {
-  return (
-    <AppProvider>
+const App = () => (
+  <LanguageProvider>
+    <div className="min-h-screen bg-background">
       <Header />
-      <About />
-      <Github />
-      <Faq />
+      <main>
+        <Hero />
+        <Overview />
+        <Projects />
+        <Community />
+        <Contribute />
+      </main>
       <Footer />
-    </AppProvider>
-  );
-}
+      <BackToTop />
+    </div>
+  </LanguageProvider>
+);
+
+export default App;

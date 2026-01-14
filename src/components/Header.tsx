@@ -1,101 +1,225 @@
-import { faDiscord } from '@fortawesome/free-brands-svg-icons';
-import { faBookOpen, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
-import { Show } from 'solid-js';
+import { Menu, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
-import { useApp } from '../context/AppContext';
-import { FontAwesomeIcon } from './FontAwesomeIcon';
+import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/hooks/useLanguage';
+import { DISCORD_URL, GITHUB_URL } from '@/lib/constants';
+
+import { DiscordIcon } from './icons/DiscordIcon';
+import { GithubIcon } from './icons/GithubIcon';
 
 export const Header = () => {
-  const { changeLanguage, getThemeIcon, isLoaded, lang, t, toggleTheme } =
-    useApp();
+  const { language, setLanguage, t } = useLanguage();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const navLinks = [
+    { href: '#projects', label: t.nav.projects },
+    { href: '#community', label: t.nav.community },
+    { href: '#contribute', label: t.nav.contribute },
+  ];
 
   return (
-    <header class="py-24 md:py-32 px-4 text-center relative overflow-hidden bg-section-1 transition-colors duration-500">
-      <div class="absolute top-4 right-4 md:top-8 md:right-8 flex space-x-4 z-20">
-        <div class="flex space-x-2">
-          <button
-            class={`font-semibold py-2 px-3 rounded-full shadow-lg cursor-pointer transition-colors duration-300 text-sm md:text-base ${
-              lang() === 'mk'
-                ? 'bg-finki-blue text-white'
-                : 'card-bg text-main hover:bg-finki-blue hover:text-white'
-            }`}
-            onClick={() => {
-              changeLanguage('mk');
-            }}
-          >
-            МК
-          </button>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'glass py-3' : 'bg-transparent py-5'
+      }`}
+    >
+      <div className="container flex items-center justify-between">
+        {/* Logo */}
+        <a
+          className="flex items-center gap-2 group"
+          href="#"
+        >
+          <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center font-bold text-primary-foreground text-sm">
+            FH
+          </div>
+          <span className="font-semibold text-lg group-hover:text-primary transition-colors">
+            {t.brand}
+          </span>
+        </a>
 
-          <button
-            class={`font-semibold py-2 px-3 rounded-full shadow-lg cursor-pointer transition-colors duration-300 text-sm md:text-base ${
-              lang() === 'en'
-                ? 'bg-finki-blue text-white'
-                : 'card-bg text-main hover:bg-finki-blue hover:text-white'
-            }`}
-            onClick={() => {
-              changeLanguage('en');
-            }}
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => (
+            <a
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              href={link.href}
+              key={link.href}
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+        {/* Right side actions */}
+        <div className="hidden md:flex items-center gap-3">
+          {/* Language Toggle */}
+          <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-secondary/50">
+            <button
+              className={`px-2 py-1 rounded text-xs font-medium transition-all ${
+                language === 'mk'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+              onClick={() => {
+                setLanguage('mk');
+              }}
+              type="button"
+            >
+              MK
+            </button>
+            <button
+              className={`px-2 py-1 rounded text-xs font-medium transition-all ${
+                language === 'en'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+              onClick={() => {
+                setLanguage('en');
+              }}
+              type="button"
+            >
+              EN
+            </button>
+          </div>
+
+          <Button
+            asChild
+            className="gap-2"
+            size="sm"
+            variant="outline"
           >
-            EN
-          </button>
+            <a
+              href={GITHUB_URL}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <GithubIcon className="w-4 h-4" />
+              GitHub
+            </a>
+          </Button>
+
+          <Button
+            asChild
+            className="gap-2"
+            size="sm"
+          >
+            <a
+              href={DISCORD_URL}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <DiscordIcon className="w-4 h-4" />
+              {t.discord}
+            </a>
+          </Button>
         </div>
 
+        {/* Mobile menu button */}
         <button
-          class="card-bg text-main font-semibold py-2 px-3 rounded-full shadow-lg transition-colors duration-500 text-sm md:text-base hover:bg-finki-blue hover:text-white"
-          id="theme-toggle"
-          onClick={toggleTheme}
+          className="md:hidden p-2 hover:bg-secondary rounded-lg transition-colors"
+          onClick={() => {
+            setIsMobileMenuOpen(!isMobileMenuOpen);
+          }}
+          type="button"
         >
-          <FontAwesomeIcon icon={getThemeIcon() === 'moon' ? faMoon : faSun} />
+          {isMobileMenuOpen ? (
+            <X className="w-5 h-5" />
+          ) : (
+            <Menu className="w-5 h-5" />
+          )}
         </button>
       </div>
 
-      <div class="container mx-auto max-w-7xl relative z-10">
-        <Show when={isLoaded()}>
-          <div>
-            <div class="flex justify-center mb-6">
-              <img
-                alt="FINKI Hub Logo"
-                class="rounded-full w-24 h-24 md:w-32 md:h-32 shadow-xl"
-                src="https://avatars.githubusercontent.com/u/207612794?s=200&v=4"
-              />
-            </div>
-            <h1 class="font-extrabold leading-tight mb-4 text-main">
-              {t('HEADER.TITLE')}
-            </h1>
-            <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8 text-secondary font-poppins">
-              {t('HEADER.DESCRIPTION')}
-            </p>
-
-            <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
+      {/* Mobile Navigation */}
+      {isMobileMenuOpen ? (
+        <div className="md:hidden glass border-t border-border mt-3">
+          <nav className="container py-4 flex flex-col gap-4">
+            {navLinks.map((link) => (
               <a
-                class="inline-flex items-center btn-gradient-blue text-white font-semibold py-3 px-8 rounded-full shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105"
-                href="https://discord.com/invite/finki-studenti-810997107376914444"
-                rel="noopener noreferrer"
-                target="_blank"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                href={link.href}
+                key={link.href}
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                }}
               >
-                <FontAwesomeIcon
-                  class="mr-2"
-                  icon={faDiscord}
-                />
-                {t('HEADER.BUTTON_DISCORD')}
+                {link.label}
               </a>
-
-              <a
-                class="inline-flex items-center btn-gradient-blue text-white font-semibold py-3 px-8 rounded-full shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105"
-                href="https://snimki.finki-hub.com/"
-                rel="noopener noreferrer"
-                target="_blank"
+            ))}
+            <div className="flex items-center gap-2 pt-4 border-t border-border">
+              <button
+                className={`px-3 py-1.5 rounded text-sm font-medium transition-all ${
+                  language === 'mk'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-muted-foreground'
+                }`}
+                onClick={() => {
+                  setLanguage('mk');
+                }}
+                type="button"
               >
-                <FontAwesomeIcon
-                  class="mr-2"
-                  icon={faBookOpen}
-                />
-                {t('HEADER.BUTTON_GUIDE')}
-              </a>
+                MK
+              </button>
+              <button
+                className={`px-3 py-1.5 rounded text-sm font-medium transition-all ${
+                  language === 'en'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-muted-foreground'
+                }`}
+                onClick={() => {
+                  setLanguage('en');
+                }}
+                type="button"
+              >
+                EN
+              </button>
             </div>
-          </div>
-        </Show>
-      </div>
+            <div className="flex gap-2">
+              <Button
+                asChild
+                className="flex-1 gap-2"
+                size="sm"
+                variant="outline"
+              >
+                <a
+                  href={GITHUB_URL}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <GithubIcon className="w-4 h-4" />
+                  GitHub
+                </a>
+              </Button>
+              <Button
+                asChild
+                className="flex-1 gap-2"
+                size="sm"
+              >
+                <a
+                  href={DISCORD_URL}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <DiscordIcon className="w-4 h-4" />
+                  {t.discord}
+                </a>
+              </Button>
+            </div>
+          </nav>
+        </div>
+      ) : null}
     </header>
   );
 };

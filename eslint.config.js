@@ -3,21 +3,23 @@ import {
   browser,
   perfectionist,
   prettier,
-  solid,
+  react,
   typescript,
 } from 'eslint-config-imperium';
 
 export default [
-  { ignores: ['dist', 'node_modules', 'vite.config.ts'] },
+  { ignores: ['dist', 'vite.config.ts'] },
   base,
   browser,
-  solid,
+  react,
   typescript,
   prettier,
   perfectionist,
   {
     rules: {
+      'max-lines-per-function': 'off',
       'no-console': 'off',
+      'react-refresh/only-export-components': 'off',
     },
   },
 ];

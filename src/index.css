@@ -1,113 +1,198 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* Custom FINKI Palette & Fonts */
-.font-montserrat {
-  font-family: 'Montserrat', sans-serif;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 95%;
+
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 142 70% 45%;
+    --primary-foreground: 0 0% 2%;
+
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 142 70% 45%;
+    --accent-foreground: 0 0% 2%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 142 70% 45%;
+
+    --radius: 0.75rem;
+
+    /* Custom tokens */
+    --glow-primary: 142 70% 45%;
+    --gradient-start: 142 70% 45%;
+    --gradient-end: 160 84% 39%;
+
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 142 70% 45%;
+    --sidebar-primary-foreground: 0 0% 2%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 142 70% 45%;
+  }
 }
 
-.font-poppins {
-  font-family: 'Poppins', sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold tracking-tight;
+  }
+
+  code,
+  pre {
+    font-family: 'JetBrains Mono', monospace;
+  }
 }
 
-.bg-finki-blue {
-  background-color: #0284c7;
-}
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg,
+        hsl(var(--gradient-start)) 0%,
+        hsl(var(--gradient-end)) 100%);
+  }
 
-.hover\:bg-finki-blue-dark:hover {
-  background-color: #0369a1;
-}
+  .bg-gradient-primary {
+    background-image: linear-gradient(135deg,
+        hsl(var(--gradient-start)) 0%,
+        hsl(var(--gradient-end)) 100%);
+  }
 
-.text-finki-blue {
-  color: #0284c7;
-}
+  .glow-primary {
+    box-shadow: 0 0 40px -10px hsl(var(--glow-primary) / 0.4);
+  }
 
-.border-finki-blue {
-  border-color: #0284c7;
-}
+  .glow-primary-sm {
+    box-shadow: 0 0 20px -5px hsl(var(--glow-primary) / 0.3);
+  }
 
-.btn-gradient-blue {
-  background-image: linear-gradient(to right, #0284c7, #0369a1);
-}
+  .glass {
+    @apply bg-card/50 backdrop-blur-xl border border-border/50;
+  }
 
-/* Light Mode Colors */
-body.light-mode {
-  background-color: #e2e8f0;
-  color: #0f172a;
-}
+  .glass-hover {
+    @apply hover:bg-card/70 hover:border-border transition-all duration-300;
+  }
 
-body.light-mode .bg-section-1 {
-  background-color: #f1f5f9;
-}
+  .card-glow {
+    @apply relative;
+  }
 
-body.light-mode .bg-section-2 {
-  background-color: #e2e8f0;
-}
+  .card-glow::before {
+    content: '';
+    @apply absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300 pointer-events-none;
+    background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        hsl(var(--glow-primary) / 0.1),
+        transparent 40%);
+  }
 
-body.light-mode .text-main {
-  color: #0f172a;
-}
+  .card-glow:hover::before {
+    @apply opacity-100;
+  }
 
-body.light-mode .text-secondary {
-  color: #334155;
-}
+  .hero-gradient {
+    background: radial-gradient(ellipse 80% 50% at 50% -20%,
+        hsl(var(--glow-primary) / 0.15),
+        transparent);
+  }
 
-body.light-mode .card-bg {
-  background-color: #f1f5f9;
-}
+  .section-gradient {
+    background: radial-gradient(ellipse 100% 100% at 50% 100%,
+        hsl(var(--glow-primary) / 0.05),
+        transparent);
+  }
 
-body.light-mode .border-footer {
-  border-color: #cbd5e1;
-}
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
 
-/* Dark Mode Colors */
-body.dark-mode {
-  background-color: #0f172a;
-  color: #e2e8f0;
-}
+  @keyframes float {
 
-body.dark-mode .bg-section-1 {
-  background-color: #1e293b;
-}
+    0%,
+    100% {
+      transform: translateY(0);
+    }
 
-body.dark-mode .bg-section-2 {
-  background-color: #0f172a;
-}
+    50% {
+      transform: translateY(-10px);
+    }
+  }
 
-body.dark-mode .text-main {
-  color: #e2e8f0;
-}
+  .animate-pulse-slow {
+    animation: pulse-slow 4s ease-in-out infinite;
+  }
 
-body.dark-mode .text-secondary {
-  color: #94a3b8;
-}
+  @keyframes pulse-slow {
 
-body.dark-mode .card-bg {
-  background-color: #1e293b;
-}
+    0%,
+    100% {
+      opacity: 0.4;
+    }
 
-body.dark-mode .border-footer {
-  border-color: #334155;
-}
+    50% {
+      opacity: 0.8;
+    }
+  }
 
-/* Responsive headings */
-h1 {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-}
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out forwards;
+  }
 
-h2 {
-  font-size: clamp(2rem, 4vw, 3rem);
-}
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
 
-/* Theme toggle button effects */
-#theme-toggle {
-  transition: transform 0.1s ease-in-out, background-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
-}
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-#theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-#theme-toggle:active {
-  transform: scale(0.95);
+  .timeline-line {
+    @apply absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2;
+    background: linear-gradient(to bottom,
+        transparent,
+        hsl(var(--primary)) 20%,
+        hsl(var(--primary)) 80%,
+        transparent);
+  }
 }
