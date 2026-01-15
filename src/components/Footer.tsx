@@ -31,7 +31,10 @@ export const Footer = () => {
               <span className="font-semibold text-lg">{t.brand}</span>
             </a>
             <p className="text-xs text-muted-foreground">
-              {t.footer.copyright}
+              {t.footer.copyright.replace(
+                '{year}',
+                new Date().getFullYear().toString(),
+              )}
             </p>
           </div>
 

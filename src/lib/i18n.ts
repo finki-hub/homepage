@@ -31,7 +31,7 @@ export const translations = {
     // Footer
     footer: {
       copyright:
-        '© 2026 FINKI Hub. Independent student platform. All rights reserved.',
+        '© {year} FINKI Hub. Independent student platform. All rights reserved.',
       madeWith: 'Made with ❤️ for students of FINKI',
     },
     // Hero
@@ -143,7 +143,7 @@ export const translations = {
     // Footer
     footer: {
       copyright:
-        '© 2026 ФИНКИ Хаб. Независна студентска платформа. Сите права се задржани.',
+        '© {year} ФИНКИ Хаб. Независна студентска платформа. Сите права се задржани.',
       madeWith: 'Направено со ❤️ за студентите на ФИНКИ',
     },
     // Hero
