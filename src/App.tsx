@@ -6,7 +6,7 @@ import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
 import { Overview } from '@/components/Overview';
 import { Projects } from '@/components/Projects';
-import { LanguageProvider } from '@/hooks/useLanguage';
+import { LanguageProvider } from '@/hooks/LanguageProvider';
 
 const App = () => (
   <LanguageProvider>
