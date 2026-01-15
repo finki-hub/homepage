@@ -8,6 +8,7 @@ export const translations = {
     brand: 'FINKI Hub',
     // Community
     community: {
+      discordTitle: 'Discord',
       features: [
         'Information commands (/help, /faq, /link, /prompt)',
         'Announcements from bulletin board, SIC, ads, and more',
@@ -15,15 +16,7 @@ export const translations = {
         'Easy contact with Student Parliament',
       ],
       joinButton: 'Join Us',
-      rulesButton: 'Read Rules',
-      rulesItems: [
-        'Treat all members with respect',
-        'Use channels appropriately',
-        'No spam or promotions',
-        'Follow FINKI guidelines',
-      ],
-      rulesTitle: 'Community Rules',
-      subtitle: 'Connect with other FINKI students',
+      subtitle: 'Connect with other students of FINKI',
       title: 'Discord Community',
     },
     // Contributions
@@ -39,7 +32,7 @@ export const translations = {
     footer: {
       copyright:
         '© 2026 FINKI Hub. Independent student platform. All rights reserved.',
-      madeWith: 'Made with ❤️ for FINKI students',
+      madeWith: 'Made with ❤️ for students of FINKI',
     },
     // Hero
     hero: {
@@ -49,7 +42,7 @@ export const translations = {
       cta: 'View Projects',
       ctaSecondary: 'Join Discord',
       subtitle:
-        'A student initiative building tools and resources for FINKI students. By students, for students.',
+        'A student initiative building tools and resources for students of FINKI. By students, for students.',
       title: 'FINKI Hub',
       titleAccent: 'independent student organization',
     },
@@ -119,23 +112,6 @@ export const translations = {
       subtitle: 'Main tools built by the community',
       title: 'Projects',
     },
-    // Rules Modal
-    rules: {
-      close: 'Close',
-      items: [
-        'Inappropriate communication such as discrimination, racism, hate speech, insults, and similar is prohibited.',
-        'Sending explicit or violent content is prohibited.',
-        'Spamming and sending inappropriate content in channels is prohibited.',
-        'Promoting paid services without administrator approval is prohibited.',
-        'Using vulgar and inappropriate names is prohibited.',
-        'Sending content and materials related to a subject during its examination is prohibited.',
-        'Sending questionnaires and surveys or collecting information in other ways without a clearly stated purpose or subject is prohibited.',
-        "Sharing someone else's identity without permission (doxing) is prohibited.",
-        'Creating new user accounts to circumvent sanctions (such as bans and similar) is prohibited.',
-        "Violating FINKI's code of ethics is prohibited.",
-      ],
-      title: 'Community Rules',
-    },
   },
   mk: {
     // Common
@@ -144,6 +120,7 @@ export const translations = {
     brand: 'ФИНКИ Хаб',
     // Community
     community: {
+      discordTitle: 'Дискорд',
       features: [
         'Информациони команди (/help, /faq, /link, /prompt)',
         'Соопштенија од огласна табла, СИЦ, огласи и друго',
@@ -151,14 +128,6 @@ export const translations = {
         'Лесен констакт со ФСС',
       ],
       joinButton: 'Приклучи се',
-      rulesButton: 'Прочитај правила',
-      rulesItems: [
-        'Однесувај се со почит кон сите членови',
-        'Користи ги каналите соодветно',
-        'Без спам и неодобрени промоции',
-        'Почитувај го етичкиот кодекс на ФИНКИ',
-      ],
-      rulesTitle: 'Кодекс на заедницата',
       subtitle: 'Поврзи се со други студенти од ФИНКИ',
       title: 'Дискорд заедница',
     },
@@ -254,23 +223,6 @@ export const translations = {
       repoButton: 'Repo',
       subtitle: 'Главни алатки создадени од заедницата',
       title: 'Проекти',
-    },
-    // Rules Modal
-    rules: {
-      close: 'Затвори',
-      items: [
-        'Забранета е недолична комуникација како дискриминација, расизам, говор на омраза, навредување и слично.',
-        'Забрането е испраќање на експлицитни или насилни содржини.',
-        'Забрането е спамање и испраќање на несоодветна содржина во каналите.',
-        'Забрането е промовирање на платени услуги без одобрение од администратор.',
-        'Забрането е користење на вулгарни и несоодветни имиња.',
-        'Забрането е испраќање на содржини и материјали поврзани со предмет за време на негово полагање.',
-        'Забрането е испраќање на прашалници и анкети или собирање информации на друг начин без јасно наведена цел или предмет.',
-        'Забрането е споделување на туѓ идентитет без дозвола (doxing).',
-        'Забрането е креирање на нови кориснички сметки за заобиколување на санкции (како забрани и слично).',
-        'Забрането е кршење на етичкиот кодекс на ФИНКИ',
-      ],
-      title: 'Правила на заедницата',
     },
   },
 } as const;
