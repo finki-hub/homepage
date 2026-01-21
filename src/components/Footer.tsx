@@ -25,9 +25,11 @@ export const Footer = () => {
               className="flex items-center gap-2"
               href="#"
             >
-              <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center font-bold text-primary-foreground text-sm">
-                FH
-              </div>
+              <img
+                alt="FINKI Hub Logo"
+                className="w-8 h-8"
+                src="/logo.png"
+              />
               <span className="font-semibold text-lg">{t.brand}</span>
             </a>
             <p className="text-xs text-muted-foreground">

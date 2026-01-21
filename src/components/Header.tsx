@@ -41,9 +41,11 @@ export const Header = () => {
           className="flex items-center gap-2 group"
           href="#"
         >
-          <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center font-bold text-primary-foreground text-sm">
-            FH
-          </div>
+          <img
+            alt="FINKI Hub Logo"
+            className="w-8 h-8"
+            src="/logo.png"
+          />
           <span className="font-semibold text-lg group-hover:text-primary transition-colors">
             {t.brand}
           </span>
