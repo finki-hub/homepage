@@ -27,7 +27,7 @@ export const Footer = () => {
             >
               <img
                 alt="FINKI Hub Logo"
-                className="w-8 h-8"
+                className="w-12 h-12 object-contain"
                 src="/logo.png"
               />
               <span className="font-semibold text-lg">{t.brand}</span>
