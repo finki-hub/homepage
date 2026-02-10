@@ -112,7 +112,30 @@ export const translations = {
       subtitle: 'Main tools built by the community',
       title: 'Projects',
     },
+    // Links
+    links: {
+      items: [
+        {
+          description: 'Access to recorded lectures',
+          name: 'Videos',
+          url: 'https://snimki.finki-hub.com/',
+        },
+        {
+          description: 'Add description',
+          name: 'Diplomas',
+          url: '#',
+        },
+        {
+          description: 'Check class schedules',
+          name: 'Schedule',
+          url: 'https://finki.edupage.org/timetable/',
+        },
+      ],
+      subtitle: 'Useful resources and quick access links',
+      title: 'Links',
+    },
   },
+
   mk: {
     // Common
     backToTop: 'Врати се горе',
@@ -223,6 +246,28 @@ export const translations = {
       repoButton: 'Repo',
       subtitle: 'Главни алатки создадени од заедницата',
       title: 'Проекти',
+    },
+    // Links
+    links: {
+      items: [
+        {
+          description: 'Пристап до снимени предавања',
+          name: 'Снимки',
+          url: 'https://snimki.finki-hub.com/',
+        },
+        {
+          description: 'Додади description',
+          name: 'Дипломи',
+          url: '#',
+        },
+        {
+          description: 'Провери распоред на часови',
+          name: 'Распоред',
+          url: 'https://finki.edupage.org/timetable/',
+        },
+      ],
+      subtitle: 'Корисни ресурси и линкови за брз пристап',
+      title: 'Линкови',
     },
   },
 } as const;
