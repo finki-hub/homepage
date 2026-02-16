@@ -24,7 +24,7 @@
     "vite": "^7.3.1"
   },
   "license": "MIT",
-  "name": "homepage",
+  "name": "finki-hub-homepage",
   "private": true,
   "scripts": {
     "build": "tsc && vite build",
