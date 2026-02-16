@@ -1,6 +1,8 @@
 FROM --platform=${BUILDPLATFORM} node:24-alpine AS build
 WORKDIR /app
 
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+
 COPY package.json package-lock.json ./
 RUN npm i --ignore-scripts
 
