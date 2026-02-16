@@ -1,0 +1,9 @@
+name: finki-hub-homepage-dev
+
+services:
+  bot:
+    build:
+      context: .
+    image: finki-hub/homepage:latest
+    pull_policy: never
+    restart: unless-stopped

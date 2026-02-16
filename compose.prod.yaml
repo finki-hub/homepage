@@ -1,0 +1,6 @@
+name: finki-hub-homepage
+
+services:
+  bot:
+    image: ghcr.io/finki-hub/homepage:latest
+    restart: unless-stopped
