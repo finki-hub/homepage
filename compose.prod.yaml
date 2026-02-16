@@ -3,4 +3,6 @@ name: finki-hub-homepage
 services:
   bot:
     image: ghcr.io/finki-hub/homepage:latest
+    ports:
+      - 8080:80
     restart: unless-stopped
