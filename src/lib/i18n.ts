@@ -92,7 +92,13 @@ export const translations = {
           description:
             'Explore completed diploma theses, search by topic, mentor, or year.',
           name: 'Дипломски',
-          url: 'https://diplomas.finki-hub.com',
+          url: 'https://diplomski.finki-hub.com',
+        },
+        {
+          description:
+            'Watch recorded lectures and study sessions for FINKI courses.',
+          name: 'Снимки',
+          url: 'https://snimki.finki-hub.com',
         },
       ],
       subtitle: 'Web platforms built for students of FINKI',
@@ -225,7 +231,13 @@ export const translations = {
           description:
             'Истражи завршени дипломски работи, пребарувај по тема, ментор или година.',
           name: 'Дипломски',
-          url: 'https://diplomas.finki-hub.com',
+          url: 'https://diplomski.finki-hub.com',
+        },
+        {
+          description:
+            'Гледај снимени предавања и сесии за учење за предметите на ФИНКИ.',
+          name: 'Снимки',
+          url: 'https://snimki.finki-hub.com',
         },
       ],
       subtitle: 'Веб платформи создадени за студентите на ФИНКИ',

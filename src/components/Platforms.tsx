@@ -1,4 +1,4 @@
-import { BookOpen, ExternalLink, GraduationCap } from 'lucide-react';
+import { BookOpen, ExternalLink, GraduationCap, Video } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/card';
 import { useLanguage } from '@/hooks/useLanguage';
 
-const platformIcons = [BookOpen, GraduationCap];
+const platformIcons = [BookOpen, GraduationCap, Video];
 
 export const Platforms = () => {
   const { t } = useLanguage();
@@ -30,7 +30,7 @@ export const Platforms = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {t.platforms.items.map((platform, index) => {
             const Icon = platformIcons[index];
             if (!Icon) return null;
