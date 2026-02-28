@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @theme {
   --color-background: hsl(var(--background));
@@ -176,22 +177,6 @@
         transparent);
   }
 
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-
-  @keyframes float {
-
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
   .animate-pulse-slow {
     animation: pulse-slow 4s ease-in-out infinite;
   }
@@ -226,48 +211,6 @@
     }
   }
 
-  .animate-accordion-down {
-    animation: accordion-down 0.2s ease-out;
-  }
-
-  .animate-accordion-up {
-    animation: accordion-up 0.2s ease-out;
-  }
-
-  @keyframes accordion-down {
-    from {
-      height: 0;
-    }
-
-    to {
-      height: var(--radix-accordion-content-height);
-    }
-  }
-
-  @keyframes accordion-up {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-
-    to {
-      height: 0;
-    }
-  }
-
-  .animate-shimmer {
-    animation: shimmer 3s linear infinite;
-  }
-
-  @keyframes shimmer {
-    0% {
-      background-position: -200% 0;
-    }
-
-    100% {
-      background-position: 200% 0;
-    }
-  }
-
   .timeline-line {
     @apply absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2;
     background: linear-gradient(to bottom,
@@ -277,127 +220,4 @@
         transparent);
   }
 
-  /* Dialog animations (replacing tailwindcss-animate) */
-  .animate-in {
-    animation-duration: 150ms;
-    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-    animation-fill-mode: both;
-  }
-
-  .animate-out {
-    animation-duration: 150ms;
-    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-    animation-fill-mode: both;
-  }
-
-  .fade-in-0 {
-    animation-name: fade-in;
-    animation-duration: 150ms;
-  }
-
-  .fade-out-0 {
-    animation-name: fade-out;
-    animation-duration: 150ms;
-  }
-
-  @keyframes fade-out {
-    from {
-      opacity: 1;
-    }
-
-    to {
-      opacity: 0;
-    }
-  }
-
-  .zoom-in-95 {
-    animation-name: zoom-in-95;
-  }
-
-  .zoom-out-95 {
-    animation-name: zoom-out-95;
-  }
-
-  @keyframes zoom-in-95 {
-    from {
-      transform: scale(0.95);
-      opacity: 0;
-    }
-
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-
-  @keyframes zoom-out-95 {
-    from {
-      transform: scale(1);
-      opacity: 1;
-    }
-
-    to {
-      transform: scale(0.95);
-      opacity: 0;
-    }
-  }
-
-  .slide-in-from-left-1\/2 {
-    animation-name: slide-in-from-left-50;
-  }
-
-  .slide-out-to-left-1\/2 {
-    animation-name: slide-out-to-left-50;
-  }
-
-  @keyframes slide-in-from-left-50 {
-    from {
-      transform: translateX(-50%);
-    }
-
-    to {
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes slide-out-to-left-50 {
-    from {
-      transform: translateX(0);
-    }
-
-    to {
-      transform: translateX(-50%);
-    }
-  }
-
-  /* For arbitrary values like [48%], we use a more flexible approach */
-  [class*="slide-in-from-top-"] {
-    --slide-from-y: -48%;
-    animation-name: slide-in-from-top-var;
-  }
-
-  [class*="slide-out-to-top-"] {
-    --slide-to-y: -48%;
-    animation-name: slide-out-to-top-var;
-  }
-
-  @keyframes slide-in-from-top-var {
-    from {
-      transform: translateY(var(--slide-from-y, -48%));
-    }
-
-    to {
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes slide-out-to-top-var {
-    from {
-      transform: translateY(0);
-    }
-
-    to {
-      transform: translateY(var(--slide-to-y, -48%));
-    }
-  }
 }
