@@ -114,7 +114,7 @@ export const translations = {
             'The core system - scrapes public FINKI pages and structures data.',
           details:
             'Automated collection of announcements, schedules, news, and other public information from FINKI websites.',
-          name: 'finki-scraper',
+          name: 'services-scraper',
           tags: ['Node.js', 'TypeScript'],
         },
         {
@@ -122,7 +122,7 @@ export const translations = {
             'Discord bot with commands for quick access to information and notifications.',
           details:
             'Use /help, /faq, /link, /prompt commands. Receive notifications for bulletin board, SIC, and internships.',
-          name: 'finki-discord-bot',
+          name: 'discord-bot',
           tags: ['Node.js', 'TypeScript', 'discord.js'],
         },
         {
@@ -130,7 +130,7 @@ export const translations = {
             'RAG-based chatbot for intelligent answers to questions.',
           details:
             'Uses retrieval-augmented generation to answer questions based on collected data.',
-          name: 'finki-chat-bot',
+          name: 'chat-bot',
           tags: ['Python', 'FastAPI', 'LangChain'],
         },
       ],
@@ -253,7 +253,7 @@ export const translations = {
             'Јадрото на системот - скенира јавни ФИНКИ страници и структурира податоци.',
           details:
             'Автоматизирано собирање на огласи, распоред, вести и други јавни информации од веб страниците на ФИНКИ.',
-          name: 'finki-scraper',
+          name: 'services-scraper',
           tags: ['Node.js', 'TypeScript'],
         },
         {
@@ -261,7 +261,7 @@ export const translations = {
             'Дискорд бот со команди за брз пристап до информации и нотификации.',
           details:
             'Користи /help, /faq, /link, /prompt команди. Прима нотификации за огласна табла, SIC и пракси.',
-          name: 'finki-discord-bot',
+          name: 'discord-bot',
           tags: ['Node.js', 'TypeScript', 'discord.js'],
         },
         {
@@ -269,7 +269,7 @@ export const translations = {
             'RAG-базиран chatbot за интелигентни одговори на прашања.',
           details:
             'Користи retrieval-augmented generation за да одговара на прашања базирани на собраните податоци.',
-          name: 'finki-chat-bot',
+          name: 'chat-bot',
           tags: ['Python', 'FastAPI', 'LangChain'],
         },
       ],
