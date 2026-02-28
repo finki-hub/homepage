@@ -24,6 +24,7 @@ export const Header = () => {
   }, []);
 
   const navLinks = [
+    { href: '#platforms', label: t.nav.platforms },
     { href: '#projects', label: t.nav.projects },
     { href: '#community', label: t.nav.community },
     { href: '#contribute', label: t.nav.contribute },

@@ -39,7 +39,7 @@ export const translations = {
       badge1: 'Student Initiative',
       badge2: 'Open Source',
       badge3: 'For the Community',
-      cta: 'View Projects',
+      cta: 'Explore Platforms',
       ctaSecondary: 'Join Discord',
       subtitle:
         'A student initiative building tools and resources for students of FINKI. By students, for students.',
@@ -50,6 +50,7 @@ export const translations = {
     nav: {
       community: 'Community',
       contribute: 'Contribute',
+      platforms: 'Platforms',
       projects: 'Projects',
     },
     // Quick Overview
@@ -77,6 +78,26 @@ export const translations = {
         },
       ],
       title: 'At a Glance',
+    },
+    // Platforms
+    platforms: {
+      items: [
+        {
+          description:
+            'Browse detailed information about FINKI courses — syllabi, materials, and more.',
+          name: 'Предмети',
+          url: 'https://predmeti.finki-hub.com',
+        },
+        {
+          description:
+            'Explore completed diploma theses, search by topic, mentor, or year.',
+          name: 'Дипломски',
+          url: 'https://diplomas.finki-hub.com',
+        },
+      ],
+      subtitle: 'Web platforms built for students of FINKI',
+      title: 'Platforms',
+      visitButton: 'Visit',
     },
     // Projects
     projects: {
@@ -151,7 +172,7 @@ export const translations = {
       badge1: 'Студентска иницијатива',
       badge2: 'Open Source',
       badge3: 'За заедницата',
-      cta: 'Погледни проекти',
+      cta: 'Истражи платформи',
       ctaSecondary: 'Приклучи се на Дискорд',
       subtitle:
         'Студентска иницијатива која гради алатки и ресурси за студентите на ФИНКИ. Од студенти, за студенти.',
@@ -162,6 +183,7 @@ export const translations = {
     nav: {
       community: 'Заедница',
       contribute: 'Придонеси',
+      platforms: 'Платформи',
       projects: 'Проекти',
     },
     // Quick Overview
@@ -189,6 +211,26 @@ export const translations = {
         },
       ],
       title: 'На кратко',
+    },
+    // Platforms
+    platforms: {
+      items: [
+        {
+          description:
+            'Прегледај детални информации за предметите на ФИНКИ — наставни програми, материјали и повеќе.',
+          name: 'Предмети',
+          url: 'https://predmeti.finki-hub.com',
+        },
+        {
+          description:
+            'Истражи завршени дипломски работи, пребарувај по тема, ментор или година.',
+          name: 'Дипломски',
+          url: 'https://diplomas.finki-hub.com',
+        },
+      ],
+      subtitle: 'Веб платформи создадени за студентите на ФИНКИ',
+      title: 'Платформи',
+      visitButton: 'Посети',
     },
     // Projects
     projects: {

@@ -72,7 +72,7 @@ export const Hero = () => {
               className="glow-primary-sm px-8"
               size="lg"
             >
-              <a href="#projects">
+              <a href="#platforms">
                 {t.hero.cta}
                 <ArrowDown className="ml-2 w-4 h-4" />
               </a>
