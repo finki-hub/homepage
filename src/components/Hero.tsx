@@ -1,4 +1,4 @@
-import { ArrowDown, Scale, Shield, Sparkles } from 'lucide-react';
+import { ArrowDown, Scale, Sparkles } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -13,7 +13,6 @@ export const Hero = () => {
   const badges = [
     { icon: Sparkles, label: t.hero.badge1 },
     { icon: Scale, label: t.hero.badge2 },
-    { icon: Shield, label: t.hero.badge3 },
   ];
 
   return (

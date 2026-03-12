@@ -55,7 +55,6 @@ export const translations = {
     hero: {
       badge1: 'Student Initiative',
       badge2: 'Open Source',
-      badge3: 'For the Community',
       cta: 'Explore Platforms',
       ctaSecondary: 'Join Discord',
       subtitle:
@@ -222,7 +221,6 @@ export const translations = {
     hero: {
       badge1: 'Студентска иницијатива',
       badge2: 'Open Source',
-      badge3: 'За заедницата',
       cta: 'Истражи платформи',
       ctaSecondary: 'Приклучи се на Дискорд',
       subtitle:
