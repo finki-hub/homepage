@@ -117,6 +117,12 @@ export const translations = {
           name: 'Снимки',
           url: 'https://snimki.finki-hub.com',
         },
+        {
+          description:
+            'Private tutoring and guided study support for FINKI students.',
+          name: 'Learnify',
+          url: 'https://learnify.mk',
+        },
       ],
       subtitle: 'Web platforms built for students of FINKI',
       title: 'Platforms',
@@ -277,6 +283,12 @@ export const translations = {
             'Гледај снимени предавања и сесии за учење за предметите на ФИНКИ.',
           name: 'Снимки',
           url: 'https://snimki.finki-hub.com',
+        },
+        {
+          description:
+            'Приватни часови и насочена поддршка за учење за студенти на ФИНКИ.',
+          name: 'Learnify',
+          url: 'https://learnify.mk',
         },
       ],
       subtitle: 'Веб платформи создадени за студентите на ФИНКИ',

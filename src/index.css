@@ -251,6 +251,22 @@
     @apply opacity-100;
   }
 
+  .card-glow-learnify::before {
+    background: radial-gradient(
+      600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      hsl(32 92% 58% / 0.14),
+      transparent 40%
+    );
+  }
+
+  [data-kb-theme='dark'] .card-glow-learnify::before {
+    background: radial-gradient(
+      600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      hsl(35 95% 68% / 0.12),
+      transparent 40%
+    );
+  }
+
   .hero-gradient {
     background: radial-gradient(ellipse 80% 50% at 50% -20%,
         hsl(var(--glow-primary) / 0.15),

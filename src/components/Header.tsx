@@ -1,4 +1,4 @@
-import { Menu, Moon, Sun, X } from 'lucide-react';
+import { Menu, Moon, Sparkles, Sun, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -14,6 +14,7 @@ export const Header = () => {
   const { theme, toggleTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const learnifyUrl = 'https://learnify.mk';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -117,6 +118,22 @@ export const Header = () => {
               EN
             </button>
           </div>
+
+          <Button
+            asChild
+            className="gap-2 border-[hsl(28_70%_72%/0.7)] bg-[hsl(30_100%_97%/0.88)] text-[hsl(28_88%_42%)] shadow-sm hover:bg-[hsl(30_100%_94%/0.98)] dark:border-[hsl(28_40%_40%/0.7)] dark:bg-[hsl(28_30%_20%/0.7)] dark:text-[hsl(35_95%_72%)] dark:hover:bg-[hsl(28_30%_24%/0.9)]"
+            size="sm"
+            variant="outline"
+          >
+            <a
+              href={learnifyUrl}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <Sparkles className="w-4 h-4" />
+              Learnify
+            </a>
+          </Button>
 
           <Button
             asChild
@@ -226,7 +243,22 @@ export const Header = () => {
                 EN
               </button>
             </div>
-            <div className="flex gap-2">
+            <div className="grid grid-cols-3 gap-2">
+              <Button
+                asChild
+                className="gap-2 border-[hsl(28_70%_72%/0.7)] bg-[hsl(30_100%_97%/0.88)] text-[hsl(28_88%_42%)] shadow-sm hover:bg-[hsl(30_100%_94%/0.98)] dark:border-[hsl(28_40%_40%/0.7)] dark:bg-[hsl(28_30%_20%/0.7)] dark:text-[hsl(35_95%_72%)] dark:hover:bg-[hsl(28_30%_24%/0.9)]"
+                size="sm"
+                variant="outline"
+              >
+                <a
+                  href={learnifyUrl}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  Learnify
+                </a>
+              </Button>
               <Button
                 asChild
                 className="flex-1 gap-2"
