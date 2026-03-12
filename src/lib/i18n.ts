@@ -8,6 +8,10 @@ export const translations = {
     brand: 'FINKI Hub',
     // Community
     community: {
+      activeMembers: 'Active members',
+      channelsEmpty: 'No public channels are visible right now.',
+      description:
+        'Get quick updates, find the right subject channel, and stay connected with the student community in one place.',
       discordTitle: 'Discord',
       features: [
         'Information commands (/help, /faq, /link, /prompt)',
@@ -16,8 +20,21 @@ export const translations = {
         'Easy contact with Student Parliament',
       ],
       joinButton: 'Join Us',
-      subtitle: 'Connect with other students of FINKI',
+      liveDescription:
+        'See who is around and which public channels are visible right now.',
+      liveTitle: 'Live server widget',
+      membersShownLabel: 'Members shown',
+      noMembers: 'No visible members right now.',
+      onlineLabel: 'Online now',
+      openButton: 'Open in Discord',
+      publicChannelsLabel: 'Public channels',
+      subtitle: 'The main student server for everything around FINKI',
       title: 'Discord Community',
+      totalMembersLabel: 'Members',
+      voiceChannels: 'Voice channels',
+      widgetError:
+        'Live Discord data is temporarily unavailable. The invite link still works.',
+      widgetLoading: 'Loading Discord activity...',
     },
     // Contributions
     contribute: {
@@ -147,6 +164,10 @@ export const translations = {
     brand: 'ФИНКИ Хаб',
     // Community
     community: {
+      activeMembers: 'Активни членови',
+      channelsEmpty: 'Моментално нема видливи јавни канали.',
+      description:
+        'Следи важни известувања, најди го точниот канал за предмет и остани поврзан со студентската заедница на едно место.',
       discordTitle: 'Дискорд',
       features: [
         'Информациони команди (/help, /faq, /link, /prompt)',
@@ -155,8 +176,21 @@ export const translations = {
         'Лесен контакт со ФСС',
       ],
       joinButton: 'Приклучи се',
-      subtitle: 'Поврзи се со други студенти од ФИНКИ',
+      liveDescription:
+        'Види кој е активен и кои јавни канали се видливи во моментот.',
+      liveTitle: 'Преглед на серверот во живо',
+      membersShownLabel: 'Прикажани членови',
+      noMembers: 'Моментално нема видливи членови.',
+      onlineLabel: 'Онлајн',
+      openButton: 'Отвори во Дискорд',
+      publicChannelsLabel: 'Јавни канали',
+      subtitle: 'Главниот студентски сервер за сè поврзано со ФИНКИ',
       title: 'Дискорд заедница',
+      totalMembersLabel: 'Членови',
+      voiceChannels: 'Гласовни канали',
+      widgetError:
+        'Податоците во живо од Дискорд моментално не се достапни. Линкот за покана сe уште работи.',
+      widgetLoading: 'Се вчитува Discord активноста...',
     },
     // Contributions
     contribute: {
