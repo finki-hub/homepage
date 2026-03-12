@@ -156,6 +156,11 @@ export const translations = {
       subtitle: 'Main tools built by the community',
       title: 'Projects',
     },
+    theme: {
+      dark: 'Dark',
+      light: 'Light',
+      toggle: 'Toggle theme',
+    },
   },
   mk: {
     // Common
@@ -311,6 +316,11 @@ export const translations = {
       repoButton: 'Repo',
       subtitle: 'Главни алатки создадени од заедницата',
       title: 'Проекти',
+    },
+    theme: {
+      dark: 'Темна',
+      light: 'Светла',
+      toggle: 'Промени тема',
     },
   },
 } as const;

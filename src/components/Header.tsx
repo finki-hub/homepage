@@ -1,8 +1,9 @@
-import { Menu, X } from 'lucide-react';
+import { Menu, Moon, Sun, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/hooks/useLanguage';
+import { useTheme } from '@/hooks/useTheme';
 import { DISCORD_URL, GITHUB_URL } from '@/lib/constants';
 
 import { DiscordIcon } from './icons/DiscordIcon';
@@ -10,6 +11,7 @@ import { GithubIcon } from './icons/GithubIcon';
 
 export const Header = () => {
   const { language, setLanguage, t } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -29,6 +31,9 @@ export const Header = () => {
     { href: '#community', label: t.nav.community },
     { href: '#contribute', label: t.nav.contribute },
   ];
+
+  const isDarkTheme = theme === 'dark';
+  const themeLabel = isDarkTheme ? t.theme.dark : t.theme.light;
 
   return (
     <header
@@ -67,6 +72,22 @@ export const Header = () => {
 
         {/* Right side actions */}
         <div className="hidden md:flex items-center gap-3">
+          <Button
+            aria-label={t.theme.toggle}
+            className="rounded-xl border-border/60 bg-background/80 text-foreground shadow-sm backdrop-blur-sm hover:bg-accent/70"
+            onClick={toggleTheme}
+            size="icon"
+            title={`${t.theme.toggle}: ${themeLabel}`}
+            type="button"
+            variant="outline"
+          >
+            {isDarkTheme ? (
+              <Sun className="h-4 w-4" />
+            ) : (
+              <Moon className="h-4 w-4" />
+            )}
+          </Button>
+
           {/* Language Toggle */}
           <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-secondary/50">
             <button
@@ -161,6 +182,22 @@ export const Header = () => {
                 {link.label}
               </a>
             ))}
+            <button
+              aria-label={t.theme.toggle}
+              className="flex items-center justify-between rounded-xl border border-border bg-background/70 px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent/60"
+              onClick={toggleTheme}
+              type="button"
+            >
+              <span>{t.theme.toggle}</span>
+              <span className="flex items-center gap-2 text-muted-foreground">
+                {isDarkTheme ? (
+                  <Sun className="h-4 w-4" />
+                ) : (
+                  <Moon className="h-4 w-4" />
+                )}
+                {themeLabel}
+              </span>
+            </button>
             <div className="flex items-center gap-2 pt-4 border-t border-border">
               <button
                 className={`px-3 py-1.5 rounded text-sm font-medium transition-all ${
