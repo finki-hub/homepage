@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useTheme } from '@/hooks/useTheme';
-import { DISCORD_URL, GITHUB_URL } from '@/lib/constants';
+import { DISCORD_URL, GITHUB_URL, LEARNIFY_URL } from '@/lib/constants';
 
 import { DiscordIcon } from './icons/DiscordIcon';
 import { GithubIcon } from './icons/GithubIcon';
@@ -14,8 +14,6 @@ export const Header = () => {
   const { theme, toggleTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const learnifyUrl = 'https://learnify.mk';
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -74,19 +72,35 @@ export const Header = () => {
         {/* Right side actions */}
         <div className="hidden md:flex items-center gap-3">
           <Button
-            aria-label={t.theme.toggle}
-            className="rounded-xl border-border/60 bg-background/80 text-foreground shadow-sm backdrop-blur-sm hover:bg-accent/70"
-            onClick={toggleTheme}
-            size="icon"
-            title={`${t.theme.toggle}: ${themeLabel}`}
-            type="button"
+            asChild
+            className="gap-2 border-[hsl(28_70%_72%/0.7)] bg-[hsl(30_100%_97%/0.88)] text-[hsl(28_88%_42%)] shadow-sm hover:bg-[hsl(30_100%_94%/0.98)] dark:border-[hsl(28_40%_40%/0.7)] dark:bg-[hsl(28_30%_20%/0.7)] dark:text-[hsl(35_95%_72%)] dark:hover:bg-[hsl(28_30%_24%/0.9)]"
+            size="sm"
             variant="outline"
           >
-            {isDarkTheme ? (
-              <Sun className="h-4 w-4" />
-            ) : (
-              <Moon className="h-4 w-4" />
-            )}
+            <a
+              href={LEARNIFY_URL}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <Sparkles className="w-4 h-4" />
+              Learnify
+            </a>
+          </Button>
+
+          <Button
+            asChild
+            className="gap-2"
+            size="sm"
+            variant="outline"
+          >
+            <a
+              href={GITHUB_URL}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <GithubIcon className="w-4 h-4" />
+              GitHub
+            </a>
           </Button>
 
           {/* Language Toggle */}
@@ -120,35 +134,19 @@ export const Header = () => {
           </div>
 
           <Button
-            asChild
-            className="gap-2 border-[hsl(28_70%_72%/0.7)] bg-[hsl(30_100%_97%/0.88)] text-[hsl(28_88%_42%)] shadow-sm hover:bg-[hsl(30_100%_94%/0.98)] dark:border-[hsl(28_40%_40%/0.7)] dark:bg-[hsl(28_30%_20%/0.7)] dark:text-[hsl(35_95%_72%)] dark:hover:bg-[hsl(28_30%_24%/0.9)]"
-            size="sm"
+            aria-label={t.theme.toggle}
+            className="rounded-xl border-border/60 bg-background/80 text-foreground shadow-sm backdrop-blur-sm hover:bg-accent/70"
+            onClick={toggleTheme}
+            size="icon"
+            title={`${t.theme.toggle}: ${themeLabel}`}
+            type="button"
             variant="outline"
           >
-            <a
-              href={learnifyUrl}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <Sparkles className="w-4 h-4" />
-              Learnify
-            </a>
-          </Button>
-
-          <Button
-            asChild
-            className="gap-2"
-            size="sm"
-            variant="outline"
-          >
-            <a
-              href={GITHUB_URL}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <GithubIcon className="w-4 h-4" />
-              GitHub
-            </a>
+            {isDarkTheme ? (
+              <Sun className="h-4 w-4" />
+            ) : (
+              <Moon className="h-4 w-4" />
+            )}
           </Button>
 
           <Button
@@ -167,20 +165,38 @@ export const Header = () => {
           </Button>
         </div>
 
-        {/* Mobile menu button */}
-        <button
-          className="md:hidden p-2 hover:bg-secondary rounded-lg transition-colors"
-          onClick={() => {
-            setIsMobileMenuOpen(!isMobileMenuOpen);
-          }}
-          type="button"
-        >
-          {isMobileMenuOpen ? (
-            <X className="w-5 h-5" />
-          ) : (
-            <Menu className="w-5 h-5" />
-          )}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <Button
+            asChild
+            className="h-9 gap-1.5 rounded-full border-[hsl(28_70%_72%_/_0.7)] bg-[hsl(30_100%_97%_/_0.88)] px-3 text-[hsl(28_88%_42%)] shadow-sm hover:bg-[hsl(30_100%_94%_/_0.98)] dark:border-[hsl(28_40%_40%_/_0.7)] dark:bg-[hsl(28_30%_20%_/_0.7)] dark:text-[hsl(35_95%_72%)] dark:hover:bg-[hsl(28_30%_24%_/_0.9)]"
+            size="sm"
+            variant="outline"
+          >
+            <a
+              href={LEARNIFY_URL}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <Sparkles className="w-4 h-4" />
+              Learnify
+            </a>
+          </Button>
+
+          {/* Mobile menu button */}
+          <button
+            className="p-2 hover:bg-secondary rounded-lg transition-colors"
+            onClick={() => {
+              setIsMobileMenuOpen(!isMobileMenuOpen);
+            }}
+            type="button"
+          >
+            {isMobileMenuOpen ? (
+              <X className="w-5 h-5" />
+            ) : (
+              <Menu className="w-5 h-5" />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Navigation */}
@@ -199,22 +215,52 @@ export const Header = () => {
                 {link.label}
               </a>
             ))}
-            <button
-              aria-label={t.theme.toggle}
-              className="flex items-center justify-between rounded-xl border border-border bg-background/70 px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent/60"
-              onClick={toggleTheme}
-              type="button"
-            >
-              <span>{t.theme.toggle}</span>
-              <span className="flex items-center gap-2 text-muted-foreground">
-                {isDarkTheme ? (
-                  <Sun className="h-4 w-4" />
-                ) : (
-                  <Moon className="h-4 w-4" />
-                )}
-                {themeLabel}
-              </span>
-            </button>
+            <div className="grid grid-cols-3 gap-2 pt-4 border-t border-border">
+              <Button
+                asChild
+                className="flex-1 gap-2"
+                size="sm"
+              >
+                <a
+                  href={DISCORD_URL}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <DiscordIcon className="w-4 h-4" />
+                  {t.discord}
+                </a>
+              </Button>
+              <Button
+                asChild
+                className="gap-2 border-[hsl(28_70%_72%/0.7)] bg-[hsl(30_100%_97%/0.88)] text-[hsl(28_88%_42%)] shadow-sm hover:bg-[hsl(30_100%_94%/0.98)] dark:border-[hsl(28_40%_40%/0.7)] dark:bg-[hsl(28_30%_20%/0.7)] dark:text-[hsl(35_95%_72%)] dark:hover:bg-[hsl(28_30%_24%/0.9)]"
+                size="sm"
+                variant="outline"
+              >
+                <a
+                  href={LEARNIFY_URL}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  Learnify
+                </a>
+              </Button>
+              <Button
+                asChild
+                className="flex-1 gap-2"
+                size="sm"
+                variant="outline"
+              >
+                <a
+                  href={GITHUB_URL}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <GithubIcon className="w-4 h-4" />
+                  GitHub
+                </a>
+              </Button>
+            </div>
             <div className="flex items-center gap-2 pt-4 border-t border-border">
               <button
                 className={`px-3 py-1.5 rounded text-sm font-medium transition-all ${
@@ -243,52 +289,22 @@ export const Header = () => {
                 EN
               </button>
             </div>
-            <div className="grid grid-cols-3 gap-2">
-              <Button
-                asChild
-                className="gap-2 border-[hsl(28_70%_72%/0.7)] bg-[hsl(30_100%_97%/0.88)] text-[hsl(28_88%_42%)] shadow-sm hover:bg-[hsl(30_100%_94%/0.98)] dark:border-[hsl(28_40%_40%/0.7)] dark:bg-[hsl(28_30%_20%/0.7)] dark:text-[hsl(35_95%_72%)] dark:hover:bg-[hsl(28_30%_24%/0.9)]"
-                size="sm"
-                variant="outline"
-              >
-                <a
-                  href={learnifyUrl}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  <Sparkles className="w-4 h-4" />
-                  Learnify
-                </a>
-              </Button>
-              <Button
-                asChild
-                className="flex-1 gap-2"
-                size="sm"
-                variant="outline"
-              >
-                <a
-                  href={GITHUB_URL}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  <GithubIcon className="w-4 h-4" />
-                  GitHub
-                </a>
-              </Button>
-              <Button
-                asChild
-                className="flex-1 gap-2"
-                size="sm"
-              >
-                <a
-                  href={DISCORD_URL}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  <DiscordIcon className="w-4 h-4" />
-                  {t.discord}
-                </a>
-              </Button>
-            </div>
+            <button
+              aria-label={t.theme.toggle}
+              className="flex items-center justify-between rounded-xl border border-border bg-background/70 px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent/60"
+              onClick={toggleTheme}
+              type="button"
+            >
+              <span>{t.theme.toggle}</span>
+              <span className="flex items-center gap-2 text-muted-foreground">
+                {isDarkTheme ? (
+                  <Sun className="h-4 w-4" />
+                ) : (
+                  <Moon className="h-4 w-4" />
+                )}
+                {themeLabel}
+              </span>
+            </button>
           </nav>
         </div>
       ) : null}
