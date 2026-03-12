@@ -45,7 +45,7 @@ export const Platforms = () => {
                       <Icon className="w-6 h-6 text-primary" />
                     </div>
                   </div>
-                  <CardTitle className="font-mono text-primary">
+                  <CardTitle className="text-primary">
                     {platform.name}
                   </CardTitle>
                   <CardDescription className="text-sm leading-relaxed">
