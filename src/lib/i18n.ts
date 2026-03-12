@@ -39,7 +39,7 @@ export const translations = {
     // Contributions
     contribute: {
       description:
-        'Have an idea, found a bug, or want to add new functionality? Contribute to our projects on GitHub!',
+        'Have an idea, found a problem, or want to add new functionality? Contribute to our projects on GitHub!',
       githubButton: 'View on GitHub',
       subtitle: 'Help us improve the platform',
       title: 'Contributions Welcome',
@@ -195,7 +195,7 @@ export const translations = {
     // Contributions
     contribute: {
       description:
-        'Имаш идеја, најде баг или сакаш да додадеш нова функционалност? Придонеси на нашите проекти на GitHub!',
+        'Имаш идеја, најде проблем или сакаш да додадеш нова функционалност? Придонеси на нашите проекти на GitHub!',
       githubButton: 'Погледни на GitHub',
       subtitle: 'Помогни ни да ја подобриме платформата',
       title: 'Придонеси се добредојдени',
