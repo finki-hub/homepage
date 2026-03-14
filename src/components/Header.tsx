@@ -60,7 +60,7 @@ export const Header = () => {
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-8">
           {navLinks.map((link) => (
             <a
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -73,13 +73,13 @@ export const Header = () => {
         </nav>
 
         {/* Right side actions */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-2 xl:gap-3">
           <LearnifyButton />
           <ActionLink
             className="gap-2"
             href={GITHUB_URL}
             icon={<GithubIcon className="w-4 h-4" />}
-            label="GitHub"
+            label={<span className="hidden xl:inline">GitHub</span>}
           />
           <LanguageToggle
             language={language}
@@ -95,12 +95,12 @@ export const Header = () => {
             className="gap-2"
             href={DISCORD_URL}
             icon={<DiscordIcon className="w-4 h-4" />}
-            label={t.discord}
+            label={<span className="hidden xl:inline">{t.discord}</span>}
             variant="default"
           />
         </div>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2 lg:hidden">
           <LearnifyButton pill />
 
           {/* Mobile menu button */}
@@ -122,7 +122,7 @@ export const Header = () => {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen ? (
-        <div className="md:hidden glass border-t border-border mt-3">
+        <div className="lg:hidden glass border-t border-border mt-3">
           <nav className="container py-4 flex flex-col gap-4">
             {navLinks.map((link) => (
               <a
