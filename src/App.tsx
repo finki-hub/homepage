@@ -9,25 +9,30 @@ import { Platforms } from '@/components/Platforms';
 import { Projects } from '@/components/Projects';
 import { LanguageProvider } from '@/hooks/LanguageProvider';
 import { ThemeProvider } from '@/hooks/ThemeProvider';
+import { useCardGlow } from '@/hooks/useCardGlow';
 
-const App = () => (
-  <ThemeProvider>
-    <LanguageProvider>
-      <div className="min-h-screen bg-background">
-        <Header />
-        <main>
-          <Hero />
-          <Overview />
-          <Platforms />
-          <Projects />
-          <Community />
-          <Contribute />
-        </main>
-        <Footer />
-        <BackToTop />
-      </div>
-    </LanguageProvider>
-  </ThemeProvider>
-);
+const App = () => {
+  useCardGlow();
+
+  return (
+    <ThemeProvider>
+      <LanguageProvider>
+        <div className="min-h-screen bg-background">
+          <Header />
+          <main>
+            <Hero />
+            <Overview />
+            <Platforms />
+            <Projects />
+            <Community />
+            <Contribute />
+          </main>
+          <Footer />
+          <BackToTop />
+        </div>
+      </LanguageProvider>
+    </ThemeProvider>
+  );
+};
 
 export default App;
