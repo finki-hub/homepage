@@ -45,9 +45,12 @@ export const Header = () => {
     >
       <div className="container flex items-center justify-between">
         {/* Logo */}
-        <a
+        <button
           className="flex items-center gap-2 group"
-          href="#"
+          onClick={() => {
+            globalThis.scrollTo({ behavior: 'smooth', top: 0 });
+          }}
+          type="button"
         >
           <img
             alt="FINKI Hub Logo"
@@ -57,7 +60,7 @@ export const Header = () => {
           <span className="font-semibold text-lg group-hover:text-primary transition-colors">
             {t.brand}
           </span>
-        </a>
+        </button>
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-4 xl:gap-8">

@@ -115,11 +115,18 @@ export const Community = () => {
                     <LoaderCircle className="h-4 w-4 animate-spin text-primary" />
                     {t.community.widgetLoading}
                   </div>
-                ) : hasError || onlineCount === null ? (
+                ) : null}
+
+                {!isLoading && (hasError || onlineCount === null) ? (
                   <p className="text-sm leading-relaxed text-muted-foreground">
                     {t.community.widgetError}
                   </p>
-                ) : visibleMembers.length > 0 ? (
+                ) : null}
+
+                {!isLoading &&
+                !hasError &&
+                onlineCount !== null &&
+                visibleMembers.length > 0 ? (
                   <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div className="min-w-0">
                       <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
@@ -157,11 +164,16 @@ export const Community = () => {
                       </div>
                     </div>
                   </div>
-                ) : (
+                ) : null}
+
+                {!isLoading &&
+                !hasError &&
+                onlineCount !== null &&
+                visibleMembers.length === 0 ? (
                   <p className="text-sm text-muted-foreground">
                     {t.community.noMembers}
                   </p>
-                )}
+                ) : null}
               </div>
             </CardContent>
           </Card>

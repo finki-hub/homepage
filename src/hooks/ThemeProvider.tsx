@@ -5,16 +5,12 @@ import { type Theme, ThemeContext } from './ThemeContext';
 const STORAGE_KEY = 'finki-hub-theme';
 
 const getInitialTheme = (): Theme => {
-  if (typeof window === 'undefined') {
-    return 'dark';
-  }
-
-  const savedTheme = window.localStorage.getItem(STORAGE_KEY);
+  const savedTheme = globalThis.localStorage.getItem(STORAGE_KEY);
   if (savedTheme === 'light' || savedTheme === 'dark') {
     return savedTheme;
   }
 
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
+  return globalThis.matchMedia('(prefers-color-scheme: dark)').matches
     ? 'dark'
     : 'light';
 };
@@ -33,7 +29,7 @@ export const ThemeProvider = ({
   useEffect(() => {
     document.documentElement.dataset['kbTheme'] = theme;
     document.documentElement.style.colorScheme = theme;
-    window.localStorage.setItem(STORAGE_KEY, theme);
+    globalThis.localStorage.setItem(STORAGE_KEY, theme);
   }, [theme]);
 
   const contextValue = useMemo(

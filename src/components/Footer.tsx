@@ -21,9 +21,12 @@ export const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Logo & Copyright */}
           <div className="flex flex-col items-center md:items-start gap-2">
-            <a
+            <button
               className="flex items-center gap-2"
-              href="#"
+              onClick={() => {
+                globalThis.scrollTo({ behavior: 'smooth', top: 0 });
+              }}
+              type="button"
             >
               <img
                 alt="FINKI Hub Logo"
@@ -31,7 +34,7 @@ export const Footer = () => {
                 src="/logo.png"
               />
               <span className="font-semibold text-lg">{t.brand}</span>
-            </a>
+            </button>
             <p className="text-xs text-muted-foreground">
               {t.footer.copyright.replace(
                 '{year}',
