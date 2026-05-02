@@ -1,6 +1,7 @@
 import {
   base,
   browser,
+  jsxA11y,
   perfectionist,
   prettier,
   react,
@@ -8,10 +9,11 @@ import {
 } from 'eslint-config-imperium';
 
 const config = [
-  { ignores: ['dist', 'vite.config.ts'] },
+  { ignores: ['dist'] },
   ...base,
   browser,
   react,
+  jsxA11y,
   typescript,
   prettier,
   perfectionist,
