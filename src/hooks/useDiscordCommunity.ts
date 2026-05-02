@@ -31,9 +31,12 @@ const getRandomMembers = (
   count: number,
 ) => {
   const shuffledMembers = [...members];
+  const randomValues = new Uint32Array(shuffledMembers.length);
+  globalThis.crypto.getRandomValues(randomValues);
 
   for (let index = shuffledMembers.length - 1; index > 0; index -= 1) {
-    const randomIndex = Math.floor(Math.random() * (index + 1));
+    const randomValue = randomValues[index] ?? 0;
+    const randomIndex = randomValue % (index + 1);
     const currentMember = shuffledMembers[index];
     const randomMember = shuffledMembers[randomIndex];
 
