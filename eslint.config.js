@@ -7,19 +7,14 @@ import {
   typescript,
 } from 'eslint-config-imperium';
 
-export default [
+const config = [
   { ignores: ['dist', 'vite.config.ts'] },
-  base,
+  ...base,
   browser,
   react,
   typescript,
   prettier,
   perfectionist,
-  {
-    rules: {
-      'max-lines-per-function': 'off',
-      'no-console': 'off',
-      'react-refresh/only-export-components': 'off',
-    },
-  },
 ];
+
+export default config;
