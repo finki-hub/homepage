@@ -34,9 +34,5 @@ export const LanguageProvider = ({
     [language, t],
   );
 
-  return (
-    <LanguageContext.Provider value={contextValue}>
-      {children}
-    </LanguageContext.Provider>
-  );
+  return <LanguageContext value={contextValue}>{children}</LanguageContext>;
 };
