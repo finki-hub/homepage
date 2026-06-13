@@ -1,5 +1,6 @@
 import {
   BookOpen,
+  CalendarDays,
   ExternalLink,
   GraduationCap,
   Sparkles,
@@ -17,7 +18,7 @@ import {
 import { useLanguage } from '@/hooks/useLanguage';
 import { cn } from '@/lib/utils';
 
-const platformIcons = [BookOpen, GraduationCap, Video, Sparkles];
+const platformIcons = [BookOpen, GraduationCap, Video, CalendarDays, Sparkles];
 
 export const Platforms = () => {
   const { t } = useLanguage();
@@ -37,7 +38,7 @@ export const Platforms = () => {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 max-w-6xl mx-auto">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 max-w-7xl mx-auto">
           {t.platforms.items.map((platform, index) => {
             const Icon = platformIcons[index];
             const isLearnify = platform.url.includes('learnify.mk');

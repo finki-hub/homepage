@@ -118,6 +118,12 @@ export const translations = {
         },
         {
           description:
+            'Browse current and historical FINKI class timetables in one place.',
+          name: 'Распореди',
+          url: 'https://rasporedi.finki-hub.com',
+        },
+        {
+          description:
             'Private tutoring and guided study support for FINKI students.',
           name: 'Learnify',
           url: 'https://learnify.mk',
@@ -281,6 +287,12 @@ export const translations = {
             'Гледај снимени предавања и сесии за учење за предметите на ФИНКИ.',
           name: 'Снимки',
           url: 'https://snimki.finki-hub.com',
+        },
+        {
+          description:
+            'Прегледај тековни и претходни распореди на часови на ФИНКИ.',
+          name: 'Распореди',
+          url: 'https://rasporedi.finki-hub.com',
         },
         {
           description:
