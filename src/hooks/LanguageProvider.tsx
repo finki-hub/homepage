@@ -10,7 +10,7 @@ export const LanguageProvider = ({
   readonly children: ReactNode;
 }) => {
   const [language, setLanguage] = useState<Language>(() => {
-    const saved = globalThis.localStorage.getItem('finki-hub-lang');
+    const saved = localStorage.getItem('finki-hub-lang');
     if (saved === 'mk' || saved === 'en') {
       return saved;
     }
@@ -20,7 +20,7 @@ export const LanguageProvider = ({
 
   const handleSetLanguage = (lang: Language) => {
     setLanguage(lang);
-    globalThis.localStorage.setItem('finki-hub-lang', lang);
+    localStorage.setItem('finki-hub-lang', lang);
   };
 
   useEffect(() => {

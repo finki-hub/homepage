@@ -48,7 +48,7 @@ export const Header = () => {
         <button
           className="flex items-center gap-2 group"
           onClick={() => {
-            globalThis.scrollTo({ behavior: 'smooth', top: 0 });
+            scrollTo({ behavior: 'smooth', top: 0 });
           }}
           type="button"
         >

@@ -41,8 +41,8 @@ export const Platforms = () => {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 max-w-7xl mx-auto">
           {t.platforms.items.map((platform, index) => {
             const Icon = platformIcons[index];
-            const isLearnify = platform.url.includes('learnify.mk');
             if (!Icon) return null;
+            const isLearnify = platform.url.includes('learnify.mk');
             return (
               <Card
                 className={cn(

@@ -32,7 +32,7 @@ const getRandomMembers = (
 ) => {
   const shuffledMembers = [...members];
   const randomValues = new Uint32Array(shuffledMembers.length);
-  globalThis.crypto.getRandomValues(randomValues);
+  crypto.getRandomValues(randomValues);
 
   for (let index = shuffledMembers.length - 1; index > 0; index -= 1) {
     const randomValue = randomValues[index] ?? 0;
@@ -81,11 +81,11 @@ export const useDiscordCommunity = () => {
           throw new Error('Discord widget request failed');
         }
 
-        const widgetData = (await widgetResponse.value.json()) as DiscordWidget;
-
         if (!isMounted) {
           return;
         }
+
+        const widgetData = (await widgetResponse.value.json()) as DiscordWidget;
 
         let nextTotalMembersCount: null | number = null;
 
