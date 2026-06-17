@@ -1,4 +1,4 @@
-FROM --platform=${BUILDPLATFORM} node:24-alpine AS build
+FROM --platform=${BUILDPLATFORM} node:26-alpine AS build
 WORKDIR /app
 
 ENV NODE_OPTIONS="--max-old-space-size=4096"
