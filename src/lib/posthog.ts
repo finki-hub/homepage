@@ -13,6 +13,8 @@ export const initPostHog = () => {
     // eslint-disable-next-line camelcase -- PostHog SDK option key
     capture_exceptions: true,
     // eslint-disable-next-line camelcase -- PostHog SDK option key
-    person_profiles: 'always',
+    capture_pageview: 'history_change',
+    // eslint-disable-next-line camelcase -- PostHog SDK option key
+    person_profiles: 'identified_only',
   });
 };
