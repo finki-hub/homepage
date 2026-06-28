@@ -11,6 +11,8 @@ export const initPostHog = () => {
     api_host: import.meta.env.VITE_POSTHOG_HOST ?? 'https://eu.i.posthog.com',
     autocapture: true,
     // eslint-disable-next-line camelcase -- PostHog SDK option key
+    capture_exceptions: true,
+    // eslint-disable-next-line camelcase -- PostHog SDK option key
     person_profiles: 'always',
   });
 };
