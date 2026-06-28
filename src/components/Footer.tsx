@@ -24,7 +24,7 @@ export const Footer = () => {
             <button
               className="flex items-center gap-2"
               onClick={() => {
-                globalThis.scrollTo({ behavior: 'smooth', top: 0 });
+                scrollTo({ behavior: 'smooth', top: 0 });
               }}
               type="button"
             >
@@ -38,7 +38,8 @@ export const Footer = () => {
             <p className="text-xs text-muted-foreground">
               {t.footer.copyright.replace(
                 '{year}',
-                new Date().getFullYear().toString(),
+                // eslint-disable-next-line unicorn/prefer-temporal -- no Temporal polyfill is bundled and browser support is still uneven; Date is safe for a static year
+                () => new Date().getFullYear().toString(),
               )}
             </p>
           </div>
@@ -82,9 +83,9 @@ export const Footer = () => {
         {/* Made with love */}
         <div className="mt-8 pt-8 border-t border-border/50 text-center">
           <p className="text-xs text-muted-foreground flex items-center justify-center gap-1">
-            {t.footer.madeWith.split('❤️')[0]?.trim() ?? ''}
+            {t.footer.madeWith.split('❤️', 1)[0]?.trim() ?? ''}
             <Heart className="w-3 h-3 text-destructive fill-current inline" />
-            {t.footer.madeWith.split('❤️')[1]?.trim() ?? ''}
+            {t.footer.madeWith.split('❤️', 2)[1]?.trim() ?? ''}
           </p>
         </div>
       </div>
