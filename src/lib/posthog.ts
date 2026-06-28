@@ -17,4 +17,5 @@ export const initPostHog = () => {
     // eslint-disable-next-line camelcase -- PostHog SDK option key
     person_profiles: 'identified_only',
   });
+  posthog.register({ service: 'homepage' });
 };
