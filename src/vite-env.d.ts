@@ -7,6 +7,7 @@ declare global {
   }
 
   interface ImportMetaEnv {
+    readonly VITE_APP_REVISION?: string;
     readonly VITE_POSTHOG_HOST?: string;
     readonly VITE_POSTHOG_KEY?: string;
   }
