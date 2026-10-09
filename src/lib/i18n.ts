@@ -97,6 +97,7 @@ export const translations = {
     },
     // Platforms
     platforms: {
+      discordButton: 'Discord',
       items: [
         {
           description:
@@ -269,6 +270,7 @@ export const translations = {
     },
     // Platforms
     platforms: {
+      discordButton: 'Дискорд',
       items: [
         {
           description:
