@@ -16,17 +16,21 @@ test(
       'GITHUB_SHA',
       'VITE_APP_REVISION',
       'VITE_POSTHOG_KEY',
-    ];
-    const previous = keys.map((key) => [key, process.env[key]]);
+    ] as const;
+    const previous = keys.map((key) => [key, process.env[key]] as const);
     t.after(() => {
       for (const [key, value] of previous) {
         if (value === undefined) Reflect.deleteProperty(process.env, key);
         else process.env[key] = value;
       }
     });
-    process.env.VITE_APP_REVISION = SPOOF_SHA;
-    process.env.VITE_POSTHOG_KEY = 'test-public-key';
-    const cases = [
+    process.env['VITE_APP_REVISION'] = SPOOF_SHA;
+    process.env['VITE_POSTHOG_KEY'] = 'test-public-key';
+    const cases: Array<{
+      readonly cloudflare?: string;
+      readonly expected?: string;
+      readonly github?: string;
+    }> = [
       { expected: MERGE_SHA, github: MERGE_SHA },
       {
         cloudflare: CLOUDFLARE_SHA,
@@ -38,10 +42,11 @@ test(
       {},
     ];
     for (const { cloudflare, expected, github } of cases) {
-      for (const [key, value] of [
-        ['CF_PAGES_COMMIT_SHA', cloudflare],
-        ['GITHUB_SHA', github],
-      ]) {
+      const buildEnvironment: Record<string, string | undefined> = {
+        CF_PAGES_COMMIT_SHA: cloudflare,
+        GITHUB_SHA: github,
+      };
+      for (const [key, value] of Object.entries(buildEnvironment)) {
         if (value === undefined) Reflect.deleteProperty(process.env, key);
         else process.env[key] = value;
       }
@@ -51,8 +56,16 @@ test(
         envDir: false,
         logLevel: 'silent',
       });
-      const code = result.output
-        .filter(({ type }) => type === 'chunk')
+      let output;
+      if (Array.isArray(result)) {
+        output = result.flatMap((bundle) => bundle.output);
+      } else if ('output' in result) {
+        output = result.output;
+      } else {
+        assert.fail('Vite returned a watcher instead of a build output');
+      }
+      const code = output
+        .filter((item) => item.type === 'chunk')
         .map(({ code: source }) => source)
         .join('\n');
       assert.ok(code.includes('homepage_view'));

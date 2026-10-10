@@ -10,12 +10,12 @@ const dockerignore = readFileSync(
   'utf8',
 );
 
-const generatedAssets = nginx
-  .match(/location \^~ \/assets\/ \{(?<body>[^}]*)\}/u)
-  ?.groups?.body.replaceAll(/\s+/gu, ' ');
-const fixedAssets = nginx
-  .match(/location ~\* .* \{(?<body>[^}]*)\}/u)
-  ?.groups?.body.replaceAll(/\s+/gu, ' ');
+const generatedAssets = /location \^~ \/assets\/ \{(?<body>[^}]*)\}/u
+  .exec(nginx)
+  ?.groups?.['body']?.replaceAll(/\s+/gu, ' ');
+const fixedAssets = /location ~\* .* \{(?<body>[^}]*)\}/u
+  .exec(nginx)
+  ?.groups?.['body']?.replaceAll(/\s+/gu, ' ');
 
 test('only generated assets receive immutable caching; fixed assets revalidate', () => {
   assert.ok(generatedAssets);

@@ -1,11 +1,13 @@
 /* eslint-disable camelcase -- Exercise the actual SDK wire schema. */
+import type { CaptureResult, PostHogConfig } from 'posthog-js';
+
 import assert from 'node:assert/strict';
 import { registerHooks } from 'node:module';
 import { test } from 'node:test';
 import { gunzipSync } from 'node:zlib';
 
 import {
-  sanitizeAnalyticsEvent,
+  sanitizeAnalyticsEvent as sanitizeAnalyticsEventImpl,
   serviceForLink,
 } from '../src/lib/analytics-privacy.ts';
 import { translations } from '../src/lib/i18n.ts';
@@ -14,6 +16,7 @@ const ID = '11111111-1111-4111-8111-111111111111';
 const REVISION = 'a'.repeat(40);
 const TOKEN = 'test-public-key';
 const PRIVATE = 'PRIVATE_TEST_INPUT';
+const COLLATOR = new Intl.Collator('en');
 const PRIVATE_URL = `https://homepage.example/?email=${PRIVATE}&utm_source=${PRIVATE}#${PRIVATE}`;
 const BASE_PROPERTIES = {
   $lib: 'web',
@@ -22,6 +25,15 @@ const BASE_PROPERTIES = {
   service: 'homepage',
   token: TOKEN,
 };
+
+// This test intentionally feeds malformed runtime data through a typed SDK
+// boundary, so keep the single unsafe conversion local to the test helper.
+const sanitizeAnalyticsEvent = (
+  event: unknown,
+  token: string = TOKEN,
+  revision?: unknown,
+): CaptureResult | null =>
+  sanitizeAnalyticsEventImpl(event as CaptureResult | null, token, revision);
 
 test('rebuilds both payload levels; trusted fields cannot be overridden', () => {
   for (const event of ['homepage_view', 'service_navigation_intent']) {
@@ -69,11 +81,9 @@ test('rebuilds both payload levels; trusted fields cannot be overridden', () => 
       'A'.repeat(40),
       PRIVATE_URL,
     ]) {
-      assert.equal(
-        'app_revision' in
-          sanitizeAnalyticsEvent(input, TOKEN, revision).properties,
-        false,
-      );
+      const sanitized = sanitizeAnalyticsEvent(input, TOKEN, revision);
+      assert.ok(sanitized);
+      assert.equal('app_revision' in sanitized.properties, false);
     }
     assert.equal(input.properties.$current_url, PRIVATE_URL);
     input.timestamp.toJSON = () => PRIVATE;
@@ -193,28 +203,46 @@ test(
       value: new URL(PRIVATE_URL),
     });
     t.after(() => Reflect.deleteProperty(globalThis, 'location'));
-    const requests = [];
-    let complete;
-    const sent = new Promise((resolve) => {
+    const requests: Array<{ body: unknown; url: string }> = [];
+    let complete!: () => void;
+    const sent = new Promise<void>((resolve) => {
       complete = resolve;
     });
-    t.mock.method(globalThis, 'fetch', (url, options) => {
-      requests.push({ body: options.body, url });
-      if (requests.length === 3) complete();
-      return Promise.resolve(new Response('{}', { status: 200 }));
-    });
+    t.mock.method(
+      globalThis,
+      'fetch',
+      (url: RequestInfo | URL, options?: RequestInit) => {
+        let requestUrl: string;
+        if (typeof url === 'string') requestUrl = url;
+        else if (url instanceof URL) requestUrl = url.href;
+        else requestUrl = url.url;
+        requests.push({ body: options?.body, url: requestUrl });
+        if (requests.length === 3) complete();
+        return Promise.resolve(new Response('{}', { status: 200 }));
+      },
+    );
     const { posthog: sdk } = await import('posthog-js');
     t.after(async () => {
       await sdk.shutdown();
     });
-    const enriched = [];
+    const enriched: CaptureResult[] = [];
     const initialize = sdk.init.bind(sdk);
-    t.mock.method(sdk, 'init', (key, config) =>
+    t.mock.method(sdk, 'init', (key: string, config: Partial<PostHogConfig>) =>
       initialize(key, {
         ...config,
         before_send: (event) => {
+          if (!event) return null;
           enriched.push(event);
-          return config.before_send(event);
+          const beforeSend = config.before_send;
+          const callbacks =
+            typeof beforeSend === 'function'
+              ? [beforeSend]
+              : (beforeSend ?? []);
+          let sanitized: CaptureResult | null = event;
+          for (const callback of callbacks) {
+            sanitized &&= callback(sanitized);
+          }
+          return sanitized;
         },
         persistence: 'memory',
         request_batching: false,
@@ -224,9 +252,13 @@ test(
       load(url, context, nextLoad) {
         const result = nextLoad(url, context);
         if (!url.endsWith('/src/lib/posthog.ts')) return result;
+        const source = result.source;
+        let sourceText = '';
+        if (typeof source === 'string') sourceText = source;
+        else if (source) sourceText = new TextDecoder().decode(source);
         return {
           ...result,
-          source: String(result.source).replaceAll('import.meta.env', () =>
+          source: sourceText.replaceAll('import.meta.env', () =>
             JSON.stringify({
               VITE_APP_REVISION: REVISION,
               VITE_POSTHOG_HOST: 'https://ingest.example',
@@ -236,22 +268,39 @@ test(
         };
       },
     });
-    t.after(() => hooks.deregister());
+    t.after(() => {
+      hooks.deregister();
+    });
     // The SDK captured its minimal non-browser environment above. Only the app's
     // passive listener needs a DOM-shaped fixture; no browser/network dependency.
-    const listeners = [];
+    const listeners: Array<
+      [string, EventListenerOrEventListenerObject, AddEventListenerOptions]
+    > = [];
     class Anchor {
-      constructor(href) {
+      href: string;
+
+      constructor(href: string) {
         this.href = href;
       }
-      closest() {
+
+      closest(): this {
         return this;
       }
     }
     const globals = {
       document: {
-        addEventListener: (...args) => {
-          listeners.push(args);
+        addEventListener: (
+          type: string,
+          listener: EventListenerOrEventListenerObject,
+          options?: AddEventListenerOptions | boolean,
+        ) => {
+          listeners.push([
+            type,
+            listener,
+            typeof options === 'boolean'
+              ? { capture: options }
+              : (options ?? {}),
+          ]);
         },
         referrer: PRIVATE_URL,
       },
@@ -286,16 +335,26 @@ test(
       'save_campaign_params',
       'save_referrer',
     ]) {
-      assert.equal(sdk.config[field], false);
+      assert.equal(sdk.config[field as keyof typeof sdk.config], false);
     }
     assert.equal(sdk.config.advanced_disable_flags, true);
     assert.equal(sdk.config.disable_external_dependency_loading, true);
-    sdk.sessionRecording.onRemoteConfig({
+    const sessionRecording = sdk.sessionRecording as
+      | undefined
+      | {
+          onRemoteConfig: (remoteConfig: {
+            config: { sessionRecording: { enabled: boolean } };
+            ok: boolean;
+          }) => void;
+          started: boolean;
+        };
+    assert.ok(sessionRecording);
+    sessionRecording.onRemoteConfig({
       config: { sessionRecording: { enabled: true } },
       ok: true,
     });
     assert.equal(sdk.config.disable_session_recording, true);
-    assert.equal(sdk.sessionRecording.started, false);
+    assert.equal(sessionRecording.started, false);
     sdk.register({
       $initial_referrer: PRIVATE_URL,
       $referrer: PRIVATE_URL,
@@ -317,20 +376,28 @@ test(
     sdk.logs.flushLogs();
     sdk.metrics.count(PRIVATE);
     await sdk.metrics.flush();
-    const click = {
+    type ClickFixture = {
+      button: number;
+      defaultPrevented: boolean;
+      target: Anchor;
+    };
+    const observe = (event: ClickFixture) => {
+      observeServiceNavigation(event as unknown as MouseEvent);
+    };
+    const click: ClickFixture = {
       button: 0,
       defaultPrevented: false,
       target: new Anchor(`https://learnify.mk/?q=${PRIVATE}#${PRIVATE}`),
     };
-    observeServiceNavigation(click);
+    observe(click);
     assert.equal(click.defaultPrevented, false);
     assert.equal(
       click.target.href,
       `https://learnify.mk/?q=${PRIVATE}#${PRIVATE}`,
     );
-    observeServiceNavigation({ ...click, target: new Anchor(PRIVATE_URL) });
-    observeServiceNavigation({ ...click, defaultPrevented: true });
-    observeServiceNavigation({ ...click, button: 2 });
+    observe({ ...click, target: new Anchor(PRIVATE_URL) });
+    observe({ ...click, defaultPrevented: true });
+    observe({ ...click, button: 2 });
     location.hash = PRIVATE;
     initPostHog();
     sdk.capture(
@@ -343,30 +410,52 @@ test(
       },
       { $set: { secret: PRIVATE_URL }, $set_once: { secret: PRIVATE_URL } },
     );
+    const lastEnriched = enriched.at(-1);
+    assert.ok(lastEnriched);
     assert.equal(
-      enriched.at(-1).properties.$current_url.includes(PRIVATE),
+      (lastEnriched.properties['$current_url'] as string).includes(PRIVATE),
       true,
     );
-    assert.equal(enriched.at(-1).$set.secret, PRIVATE_URL);
+    assert.equal(lastEnriched.$set?.['secret'], PRIVATE_URL);
     await sent;
     assert.equal(requests.length, 3);
     assert.ok(requests.every(({ body }) => typeof body !== 'string'));
-    const payloads = requests.map(({ body, url }) => {
+    const payloads: Array<{
+      event: string;
+      properties: Record<string, unknown>;
+      uuid: string;
+    }> = requests.map(({ body, url }) => {
       assert.equal(url.startsWith('https://ingest.example/e/'), true);
       const text =
         typeof body === 'string'
           ? body
-          : gunzipSync(new Uint8Array(body)).toString();
+          : gunzipSync(body as Uint8Array).toString();
       assert.equal(text.includes(PRIVATE), false);
-      const payload = JSON.parse(text);
+      const parsed: unknown = JSON.parse(text);
+      assert.ok(
+        typeof parsed === 'object' &&
+          parsed !== null &&
+          'api_key' in parsed &&
+          'batch' in parsed &&
+          Array.isArray(parsed.batch),
+      );
+      const payload = parsed as {
+        api_key: string;
+        batch: Array<{
+          event: string;
+          properties: Record<string, unknown>;
+          timestamp?: string;
+          uuid: string;
+        }>;
+      };
       assert.equal(payload.api_key, TOKEN);
+      assert.equal(payload.batch.length, 1);
       const event = payload.batch[0];
-      assert.deepEqual(Object.keys(event).sort(), [
-        'event',
-        'properties',
-        'timestamp',
-        'uuid',
-      ]);
+      assert.ok(event);
+      assert.deepEqual(
+        Object.keys(event).sort((a, b) => COLLATOR.compare(a, b)),
+        ['event', 'properties', 'timestamp', 'uuid'],
+      );
       const allowed = new Set([
         ...Object.keys(BASE_PROPERTIES),
         '$device_id',
@@ -380,29 +469,53 @@ test(
         Object.keys(event.properties).every((key) => allowed.has(key)),
         true,
       );
-      assert.equal(event.properties.app_revision, REVISION);
-      assert.equal(event.properties.analytics_schema_version, 2);
-      assert.equal(event.properties.$process_person_profile, false);
+      assert.equal(event.properties['app_revision'], REVISION);
+      assert.equal(event.properties['analytics_schema_version'], 2);
+      assert.equal(event.properties['$process_person_profile'], false);
       return event;
     });
-    assert.deepEqual(
-      payloads.map(({ event }) => event),
-      [
-        'homepage_view',
-        'service_navigation_intent',
-        'service_navigation_intent',
-      ],
+    // Capture order is synchronous; independent gzip work may reorder delivery.
+    const approvedCaptures = enriched.filter(
+      ({ event }) =>
+        event === 'homepage_view' || event === 'service_navigation_intent',
     );
-    assert.equal(payloads[1].properties.service_id, 'learnify');
-    assert.equal(payloads[2].properties.service_id, 'recordings');
+    const expectedCaptures = [
+      ['homepage_view', null],
+      ['service_navigation_intent', 'learnify'],
+      ['service_navigation_intent', 'recordings'],
+    ];
+    assert.deepEqual(
+      approvedCaptures.map(({ event, properties }) => {
+        const serviceId: unknown = properties['service_id'];
+        return [event, serviceId ?? null];
+      }),
+      expectedCaptures,
+    );
+    assert.equal(new Set(approvedCaptures.map(({ uuid }) => uuid)).size, 3);
+    const payloadsByUuid = new Map(
+      payloads.map((payload) => [payload.uuid, payload]),
+    );
+    assert.equal(payloadsByUuid.size, 3);
+    assert.deepEqual(
+      approvedCaptures.map(({ uuid }) => {
+        const payload = payloadsByUuid.get(uuid);
+        assert.ok(payload);
+        return [payload.event, payload.properties['service_id'] ?? null];
+      }),
+      expectedCaptures,
+    );
     sdk.opt_out_capturing();
-    observeServiceNavigation(click);
+    observe(click);
     assert.equal(requests.length, 3);
     assert.equal(click.defaultPrevented, false);
     t.mock.method(sdk, 'capture', () => {
       throw new Error('SDK unavailable');
     });
-    assert.doesNotThrow(() => observeServiceNavigation(click));
-    assert.doesNotThrow(() => observeServiceNavigation(click));
+    assert.doesNotThrow(() => {
+      observe(click);
+    });
+    assert.doesNotThrow(() => {
+      observe(click);
+    });
   },
 );

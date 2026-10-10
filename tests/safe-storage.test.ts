@@ -6,7 +6,7 @@ import {
   writeBrowserStorage,
 } from '../src/lib/safe-storage.ts';
 
-const restoreStorage = (descriptor) => {
+const restoreStorage = (descriptor: PropertyDescriptor | undefined) => {
   if (descriptor) {
     Object.defineProperty(globalThis, 'localStorage', descriptor);
   } else {
@@ -19,7 +19,9 @@ test('storage failures fall back safely for blocked reads and writes', (t) => {
     globalThis,
     'localStorage',
   );
-  t.after(() => restoreStorage(originalDescriptor));
+  t.after(() => {
+    restoreStorage(originalDescriptor);
+  });
 
   Object.defineProperty(globalThis, 'localStorage', {
     configurable: true,
@@ -52,14 +54,16 @@ test('storage helpers preserve normal reads and writes', (t) => {
     globalThis,
     'localStorage',
   );
-  t.after(() => restoreStorage(originalDescriptor));
+  t.after(() => {
+    restoreStorage(originalDescriptor);
+  });
 
-  const values = new Map([['theme', 'dark']]);
+  const values = new Map<string, string>([['theme', 'dark']]);
   Object.defineProperty(globalThis, 'localStorage', {
     configurable: true,
     value: {
-      getItem: (key) => values.get(key) ?? null,
-      setItem: (key, value) => values.set(key, value),
+      getItem: (key: string) => values.get(key) ?? null,
+      setItem: (key: string, value: string) => values.set(key, value),
     },
   });
 
