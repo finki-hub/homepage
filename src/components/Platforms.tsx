@@ -3,7 +3,9 @@ import {
   CalendarDays,
   ExternalLink,
   GraduationCap,
+  MessagesSquare,
   Sparkles,
+  Terminal,
   Video,
 } from 'lucide-react';
 
@@ -21,7 +23,15 @@ import { cn } from '@/lib/utils';
 
 import { DiscordIcon } from './icons/DiscordIcon';
 
-const platformIcons = [BookOpen, GraduationCap, Video, CalendarDays, Sparkles];
+const platformIcons = [
+  BookOpen,
+  GraduationCap,
+  Video,
+  CalendarDays,
+  Sparkles,
+  Terminal,
+  MessagesSquare,
+];
 
 export const Platforms = () => {
   const { t } = useLanguage();
@@ -41,7 +51,7 @@ export const Platforms = () => {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 max-w-7xl mx-auto">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-8 max-w-7xl mx-auto">
           {t.platforms.items.map((platform, index) => {
             const Icon = platformIcons[index];
             if (!Icon) return null;
@@ -50,6 +60,10 @@ export const Platforms = () => {
               <Card
                 className={cn(
                   'group glass glass-hover card-glow border-border/50 flex flex-col',
+                  'xl:col-span-2',
+                  index === 4 && 'xl:col-start-2',
+                  index === 6 &&
+                    'sm:col-span-2 sm:w-1/2 sm:justify-self-center lg:col-span-1 lg:col-start-2 lg:w-full xl:col-start-auto',
                   isLearnify &&
                     'card-glow-learnify overflow-hidden border-[hsl(28_70%_72%/0.4)] shadow-[0_20px_40px_-34px_hsl(28_88%_52%/0.35)] dark:border-[hsl(28_40%_40%/0.45)] dark:shadow-[0_20px_40px_-34px_hsl(28_88%_52%/0.22)]',
                 )}

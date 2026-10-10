@@ -129,6 +129,17 @@ export const translations = {
           name: 'Learnify',
           url: 'https://learnify.mk',
         },
+        {
+          description:
+            'Open a disposable Ubuntu environment in your browser, with a terminal and file browser.',
+          name: 'Shell',
+          url: 'https://shell.finki-hub.com',
+        },
+        {
+          description: 'A student chat app powered by the FINKI Hub chatbot.',
+          name: 'Chat',
+          url: 'https://chat.finki-hub.com',
+        },
       ],
       subtitle: 'Web platforms built for students of FINKI',
       title: 'Platforms',
@@ -301,6 +312,18 @@ export const translations = {
             'Приватни часови и насочена поддршка за учење за студенти на ФИНКИ.',
           name: 'Learnify',
           url: 'https://learnify.mk',
+        },
+        {
+          description:
+            'Отвори привремена Ubuntu околина во прелистувачот со терминал и прелистувач на датотеки.',
+          name: 'Shell',
+          url: 'https://shell.finki-hub.com',
+        },
+        {
+          description:
+            'Апликација за разговор за студенти, поддржана од чет-ботот на ФИНКИ Хаб.',
+          name: 'Chat',
+          url: 'https://chat.finki-hub.com',
         },
       ],
       subtitle: 'Веб платформи создадени за студентите на ФИНКИ',

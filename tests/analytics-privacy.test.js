@@ -154,7 +154,15 @@ test('public registry links map to fixed IDs, never destinations or DOM labels',
   for (const language of Object.values(translations)) {
     assert.deepEqual(
       language.platforms.items.map(({ url }) => serviceForLink(url)),
-      ['courses-listing', 'diplomas', 'recordings', 'schedules', 'learnify'],
+      [
+        'courses-listing',
+        'diplomas',
+        'recordings',
+        'schedules',
+        'learnify',
+        'shell',
+        'chat',
+      ],
     );
   }
   assert.equal(
