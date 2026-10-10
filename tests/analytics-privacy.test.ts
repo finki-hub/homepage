@@ -423,6 +423,7 @@ test(
     const payloads: Array<{
       event: string;
       properties: Record<string, unknown>;
+      uuid: string;
     }> = requests.map(({ body, url }) => {
       assert.equal(url.startsWith('https://ingest.example/e/'), true);
       const text =
@@ -448,6 +449,7 @@ test(
         }>;
       };
       assert.equal(payload.api_key, TOKEN);
+      assert.equal(payload.batch.length, 1);
       const event = payload.batch[0];
       assert.ok(event);
       assert.deepEqual(
@@ -472,18 +474,36 @@ test(
       assert.equal(event.properties['$process_person_profile'], false);
       return event;
     });
-    assert.deepEqual(
-      payloads.map(({ event }) => event),
-      [
-        'homepage_view',
-        'service_navigation_intent',
-        'service_navigation_intent',
-      ],
+    // Capture order is synchronous; independent gzip work may reorder delivery.
+    const approvedCaptures = enriched.filter(
+      ({ event }) =>
+        event === 'homepage_view' || event === 'service_navigation_intent',
     );
-    assert.ok(payloads[1]);
-    assert.ok(payloads[2]);
-    assert.equal(payloads[1].properties['service_id'], 'learnify');
-    assert.equal(payloads[2].properties['service_id'], 'recordings');
+    const expectedCaptures = [
+      ['homepage_view', null],
+      ['service_navigation_intent', 'learnify'],
+      ['service_navigation_intent', 'recordings'],
+    ];
+    assert.deepEqual(
+      approvedCaptures.map(({ event, properties }) => {
+        const serviceId: unknown = properties['service_id'];
+        return [event, serviceId ?? null];
+      }),
+      expectedCaptures,
+    );
+    assert.equal(new Set(approvedCaptures.map(({ uuid }) => uuid)).size, 3);
+    const payloadsByUuid = new Map(
+      payloads.map((payload) => [payload.uuid, payload]),
+    );
+    assert.equal(payloadsByUuid.size, 3);
+    assert.deepEqual(
+      approvedCaptures.map(({ uuid }) => {
+        const payload = payloadsByUuid.get(uuid);
+        assert.ok(payload);
+        return [payload.event, payload.properties['service_id'] ?? null];
+      }),
+      expectedCaptures,
+    );
     sdk.opt_out_capturing();
     observe(click);
     assert.equal(requests.length, 3);
