@@ -64,8 +64,11 @@ export const translations = {
     },
     // Header
     nav: {
+      closeMenu: 'Close menu',
       community: 'Community',
       contribute: 'Contribute',
+      languageGroup: 'Language',
+      openMenu: 'Open menu',
       platforms: 'Platforms',
       projects: 'Projects',
     },
@@ -179,6 +182,7 @@ export const translations = {
       subtitle: 'Main tools built by the community',
       title: 'Projects',
     },
+    skipToContent: 'Skip to main content',
     theme: {
       dark: 'Dark',
       light: 'Light',
@@ -248,8 +252,11 @@ export const translations = {
     },
     // Header
     nav: {
+      closeMenu: 'Затвори мени',
       community: 'Заедница',
       contribute: 'Придонеси',
+      languageGroup: 'Јазик',
+      openMenu: 'Отвори мени',
       platforms: 'Платформи',
       projects: 'Проекти',
     },
@@ -364,6 +371,7 @@ export const translations = {
       subtitle: 'Главни алатки создадени од заедницата',
       title: 'Проекти',
     },
+    skipToContent: 'Прескокни до главната содржина',
     theme: {
       dark: 'Темна',
       light: 'Светла',

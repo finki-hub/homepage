@@ -24,7 +24,7 @@ export const Footer = () => {
             <button
               className="flex items-center gap-2"
               onClick={() => {
-                scrollTo({ behavior: 'smooth', top: 0 });
+                scrollTo({ behavior: 'auto', top: 0 });
               }}
               type="button"
             >
