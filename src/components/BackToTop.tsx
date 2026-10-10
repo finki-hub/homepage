@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/hooks/useLanguage';
 
 const scrollToTop = () => {
-  window.scrollTo({ behavior: 'smooth', top: 0 });
+  window.scrollTo({ behavior: 'auto', top: 0 });
 };
 
 export const BackToTop = () => {

@@ -4,7 +4,7 @@ import {
   DISCORD_INVITE_API_URL,
   DISCORD_URL,
   DISCORD_WIDGET_API_URL,
-} from '@/lib/constants';
+} from '../lib/constants.ts';
 
 type DiscordInvite = {
   readonly approximate_member_count?: number;
@@ -25,6 +25,111 @@ type DiscordWidgetMember = {
 };
 
 const DISCORD_VISIBLE_MEMBERS_LIMIT = 7;
+const DISCORD_REQUEST_TIMEOUT_MS = 10_000;
+
+type DiscordRequestOptions = {
+  readonly fetcher?: typeof fetch;
+  readonly inviteSignal: AbortSignal;
+  readonly timeoutMs?: number;
+  readonly widgetSignal: AbortSignal;
+};
+
+const runWithTimeout = async <Result>(
+  parentSignal: AbortSignal,
+  operation: (signal: AbortSignal) => Promise<Result>,
+  timeoutMs: number,
+): Promise<Result> => {
+  const controller = new AbortController();
+  const abortRequest = () => {
+    controller.abort();
+  };
+
+  if (parentSignal.aborted) {
+    abortRequest();
+  } else {
+    parentSignal.addEventListener('abort', abortRequest, { once: true });
+  }
+
+  const timeout = setTimeout(abortRequest, timeoutMs);
+  const request = (async () => operation(controller.signal))();
+  const aborted = new Promise<never>((_resolve, reject) => {
+    const rejectAborted = () => {
+      reject(new Error('Discord request aborted'));
+    };
+    if (controller.signal.aborted) {
+      rejectAborted();
+    } else {
+      controller.signal.addEventListener('abort', rejectAborted, {
+        once: true,
+      });
+    }
+  });
+
+  try {
+    return await Promise.race([request, aborted]);
+  } finally {
+    clearTimeout(timeout);
+    parentSignal.removeEventListener('abort', abortRequest);
+  }
+};
+
+type DiscordCommunityData = {
+  readonly inviteCount: Promise<null | number>;
+  readonly widget: DiscordWidget;
+};
+
+export const fetchDiscordCommunity = async ({
+  fetcher = fetch,
+  inviteSignal,
+  timeoutMs = DISCORD_REQUEST_TIMEOUT_MS,
+  widgetSignal,
+}: DiscordRequestOptions): Promise<DiscordCommunityData> => {
+  const inviteCount = (async (): Promise<null | number> => {
+    try {
+      return await runWithTimeout(
+        inviteSignal,
+        async (signal) => {
+          const response = await fetcher(DISCORD_INVITE_API_URL, { signal });
+          if (!response.ok) {
+            return null;
+          }
+
+          try {
+            const inviteData = (await response.json()) as DiscordInvite;
+            const memberCount = inviteData.approximate_member_count;
+            return typeof memberCount === 'number' &&
+              Number.isFinite(memberCount)
+              ? memberCount
+              : null;
+          } catch {
+            return null;
+          }
+        },
+        timeoutMs,
+      );
+    } catch {
+      return null;
+    }
+  })();
+
+  const widget = await runWithTimeout(
+    widgetSignal,
+    async (signal) => {
+      const response = await fetcher(DISCORD_WIDGET_API_URL, { signal });
+      if (!response.ok) {
+        throw new Error('Discord widget request failed');
+      }
+
+      return (await response.json()) as DiscordWidget;
+    },
+    timeoutMs,
+  );
+
+  return {
+    inviteCount,
+    widget,
+  };
+};
 
 const getRandomMembers = (
   members: readonly DiscordWidgetMember[],
@@ -63,47 +168,41 @@ export const useDiscordCommunity = () => {
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    const controller = new AbortController();
+    const widgetController = new AbortController();
+    const inviteController = new AbortController();
     let isMounted = true;
 
     const loadCommunity = async () => {
       try {
-        const [widgetResponse, inviteResponse] = await Promise.allSettled([
-          fetch(DISCORD_WIDGET_API_URL, {
-            signal: controller.signal,
-          }),
-          fetch(DISCORD_INVITE_API_URL, {
-            signal: controller.signal,
-          }),
-        ]);
-
-        if (widgetResponse.status !== 'fulfilled' || !widgetResponse.value.ok) {
-          throw new Error('Discord widget request failed');
-        }
+        const { inviteCount, widget: widgetData } = await fetchDiscordCommunity(
+          {
+            inviteSignal: inviteController.signal,
+            widgetSignal: widgetController.signal,
+          },
+        );
 
         if (!isMounted) {
           return;
-        }
-
-        const widgetData = (await widgetResponse.value.json()) as DiscordWidget;
-
-        let nextTotalMembersCount: null | number = null;
-
-        if (inviteResponse.status === 'fulfilled' && inviteResponse.value.ok) {
-          const inviteData =
-            (await inviteResponse.value.json()) as DiscordInvite;
-
-          nextTotalMembersCount = inviteData.approximate_member_count ?? null;
         }
 
         setWidget(widgetData);
         setVisibleMembers(
           getRandomMembers(widgetData.members, DISCORD_VISIBLE_MEMBERS_LIMIT),
         );
-        setTotalMembersCount(nextTotalMembersCount);
+        setTotalMembersCount(null);
         setHasError(false);
+
+        const updateInviteCount = async () => {
+          const count = await inviteCount;
+          if (isMounted) {
+            setTotalMembersCount(count);
+          }
+        };
+        void updateInviteCount();
       } catch {
-        if (!isMounted || controller.signal.aborted) {
+        inviteController.abort();
+
+        if (!isMounted || widgetController.signal.aborted) {
           return;
         }
 
@@ -122,7 +221,8 @@ export const useDiscordCommunity = () => {
 
     return () => {
       isMounted = false;
-      controller.abort();
+      widgetController.abort();
+      inviteController.abort();
     };
   }, []);
 
