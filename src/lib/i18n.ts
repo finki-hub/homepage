@@ -102,25 +102,25 @@ export const translations = {
         {
           description:
             'Browse detailed information about FINKI courses — syllabi, materials, and more.',
-          name: 'Предмети',
+          name: 'Courses',
           url: 'https://predmeti.finki-hub.com',
         },
         {
           description:
             'Explore completed diploma theses, search by topic, mentor, or year.',
-          name: 'Дипломски',
+          name: 'Theses',
           url: 'https://diplomski.finki-hub.com',
         },
         {
           description:
             'Watch recorded lectures and study sessions for FINKI courses.',
-          name: 'Снимки',
+          name: 'Recordings',
           url: 'https://snimki.finki-hub.com',
         },
         {
           description:
             'Browse current and historical FINKI class timetables in one place.',
-          name: 'Распореди',
+          name: 'Schedules',
           url: 'https://rasporedi.finki-hub.com',
         },
         {
@@ -316,13 +316,13 @@ export const translations = {
         {
           description:
             'Отвори привремена Ubuntu околина во прелистувачот со терминал и прелистувач на датотеки.',
-          name: 'Shell',
+          name: 'Школка',
           url: 'https://shell.finki-hub.com',
         },
         {
           description:
             'Апликација за разговор за студенти, поддржана од чет-ботот на ФИНКИ Хаб.',
-          name: 'Chat',
+          name: 'Чет',
           url: 'https://chat.finki-hub.com',
         },
       ],
