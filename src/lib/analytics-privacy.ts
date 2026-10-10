@@ -1,7 +1,13 @@
 /* eslint-disable camelcase -- PostHog configuration and wire fields use snake_case. */
 import type { CaptureResult, PostHogConfig } from 'posthog-js';
 
-import { DISCORD_URL, GITHUB_URL, LEARNIFY_URL } from './constants.ts';
+import {
+  CHAT_URL,
+  DISCORD_URL,
+  GITHUB_URL,
+  LEARNIFY_URL,
+  SHELL_URL,
+} from './constants.ts';
 
 // Only the public entrance links in constants.ts and i18n.ts have a metric.
 const SERVICE_LINKS = new Map([
@@ -9,7 +15,9 @@ const SERVICE_LINKS = new Map([
   ['https://predmeti.finki-hub.com/', 'courses-listing'],
   ['https://rasporedi.finki-hub.com/', 'schedules'],
   ['https://snimki.finki-hub.com/', 'recordings'],
+  [`${CHAT_URL}/`, 'chat'],
   [`${LEARNIFY_URL}/`, 'learnify'],
+  [`${SHELL_URL}/`, 'shell'],
   [DISCORD_URL, 'discord'],
   [GITHUB_URL, 'github'],
 ]);
