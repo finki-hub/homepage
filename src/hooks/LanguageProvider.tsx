@@ -12,11 +12,7 @@ export const LanguageProvider = ({
 }) => {
   const [language, setLanguage] = useState<Language>(() => {
     const saved = readBrowserStorage('finki-hub-lang');
-    if (saved === 'mk' || saved === 'en') {
-      return saved;
-    }
-
-    return 'mk';
+    return saved === 'mk' || saved === 'en' ? saved : 'mk';
   });
 
   const handleSetLanguage = (lang: Language) => {
