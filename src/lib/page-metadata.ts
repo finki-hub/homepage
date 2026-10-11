@@ -3,6 +3,8 @@ import { type Language, translations } from './i18n.ts';
 const openGraphLocales: Record<Language, string> = {
   en: 'en_US',
   mk: 'mk_MK',
+  sq: 'sq_AL',
+  tr: 'tr_TR',
 };
 
 const getPageMetadata = (language: Language) => {

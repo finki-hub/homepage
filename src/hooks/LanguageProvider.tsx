@@ -1,6 +1,6 @@
 import { type ReactNode, useEffect, useMemo, useState } from 'react';
 
-import { type Language, translations } from '@/lib/i18n';
+import { isLanguage, type Language, translations } from '@/lib/i18n';
 import { updatePageMetadata } from '@/lib/page-metadata';
 import { readBrowserStorage, writeBrowserStorage } from '@/lib/safe-storage';
 
@@ -13,7 +13,7 @@ export const LanguageProvider = ({
 }) => {
   const [language, setLanguage] = useState<Language>(() => {
     const saved = readBrowserStorage('finki-hub-lang');
-    return saved === 'mk' || saved === 'en' ? saved : 'mk';
+    return isLanguage(saved) ? saved : 'mk';
   });
 
   const handleSetLanguage = (lang: Language) => {

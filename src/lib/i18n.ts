@@ -1,6 +1,9 @@
-export type Language = 'en' | 'mk';
+import { sq } from './locales/sq.ts';
+import { tr } from './locales/tr.ts';
 
-export const translations = {
+export type Language = keyof typeof dictionaries;
+
+const dictionaries = {
   en: {
     // Common
     backToTop: 'Back to top',
@@ -388,6 +391,24 @@ export const translations = {
       toggle: 'Промени тема',
     },
   },
+  sq,
+  tr,
 } as const;
 
-export type Translations = typeof translations.mk;
+export type Translations = Localized<typeof dictionaries.en>;
+
+type Localized<T> = T extends string
+  ? string
+  : { readonly [Key in keyof T]: Localized<T[Key]> };
+
+export const translations: Record<Language, Translations> = dictionaries;
+
+export const languageNames = {
+  en: 'English',
+  mk: 'Македонски',
+  sq: 'Shqip',
+  tr: 'Türkçe',
+} as const satisfies Record<Language, string>;
+
+export const isLanguage = (value: unknown): value is Language =>
+  typeof value === 'string' && Object.hasOwn(translations, value);

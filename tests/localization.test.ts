@@ -2,7 +2,25 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { build } from 'vite';
 
-import { translations } from '../src/lib/i18n.ts';
+import { isLanguage, languageNames, translations } from '../src/lib/i18n.ts';
+
+test('only available languages are accepted from browser storage', () => {
+  for (const language of Object.keys(translations)) {
+    assert.ok(isLanguage(language));
+  }
+  for (const unsupported of [
+    null,
+    undefined,
+    '',
+    'de',
+    'sq-AL',
+    'constructor',
+    '__proto__',
+  ]) {
+    assert.equal(isLanguage(unsupported), false);
+  }
+  assert.deepEqual(Object.keys(languageNames), Object.keys(translations));
+});
 
 test('production HTML contains localized defaults before JavaScript runs', async () => {
   const result = await build({
