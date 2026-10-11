@@ -139,7 +139,7 @@ export const Header = () => {
 
         {/* Mobile Navigation */}
         <div
-          className="lg:hidden glass border-t border-border mt-3 max-h-[calc(100vh_-_7rem)] max-h-[calc(100dvh_-_7rem)] overflow-y-auto overscroll-contain"
+          className="lg:hidden glass border-t border-border mt-3 max-h-[calc(100dvh_-_7rem)] overflow-y-auto overscroll-contain"
           hidden={!isMobileMenuOpen}
           id="mobile-navigation"
         >
