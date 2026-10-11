@@ -38,94 +38,108 @@ export const Header = () => {
   const themeLabel = isDarkTheme ? t.theme.dark : t.theme.light;
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'glass py-3' : 'bg-transparent py-5'
-      }`}
-    >
-      <div className="container flex items-center justify-between">
-        {/* Logo */}
-        <button
-          className="flex items-center gap-2 group"
-          onClick={() => {
-            scrollTo({ behavior: 'smooth', top: 0 });
-          }}
-          type="button"
-        >
-          <img
-            alt="FINKI Hub Logo"
-            className="w-12 h-12 object-contain"
-            src="/logo.png"
-          />
-          <span className="font-semibold text-lg group-hover:text-primary transition-colors">
-            {t.brand}
-          </span>
-        </button>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-4 xl:gap-8">
-          {navLinks.map((link) => (
-            <a
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              href={link.href}
-              key={link.href}
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-
-        {/* Right side actions */}
-        <div className="hidden lg:flex items-center gap-2 xl:gap-3">
-          <LearnifyButton />
-          <ActionLink
-            className="gap-2"
-            href={GITHUB_URL}
-            icon={<GithubIcon className="w-4 h-4" />}
-            label={<span className="hidden xl:inline">GitHub</span>}
-          />
-          <LanguageToggle
-            language={language}
-            setLanguage={setLanguage}
-          />
-          <ThemeToggleButton
-            isDarkTheme={isDarkTheme}
-            themeLabel={themeLabel}
-            toggleLabel={t.theme.toggle}
-            toggleTheme={toggleTheme}
-          />
-          <ActionLink
-            className="gap-2"
-            href={DISCORD_URL}
-            icon={<DiscordIcon className="w-4 h-4" />}
-            label={<span className="hidden xl:inline">{t.discord}</span>}
-            variant="default"
-          />
-        </div>
-
-        <div className="flex items-center gap-2 lg:hidden">
-          <LearnifyButton pill />
-
-          {/* Mobile menu button */}
+    <>
+      <a
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-background focus:px-4 focus:py-3 focus:text-foreground focus:shadow-lg focus-visible:ring-2 focus-visible:ring-ring"
+        href="#main-content"
+      >
+        {t.skipToContent}
+      </a>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled ? 'glass py-3' : 'bg-transparent py-5'
+        }`}
+      >
+        <div className="container flex items-center justify-between">
+          {/* Logo */}
           <button
-            className="p-2 hover:bg-secondary rounded-lg transition-colors"
+            className="flex items-center gap-2 group"
             onClick={() => {
-              setIsMobileMenuOpen(!isMobileMenuOpen);
+              scrollTo({ behavior: 'auto', top: 0 });
             }}
             type="button"
           >
-            {isMobileMenuOpen ? (
-              <X className="w-5 h-5" />
-            ) : (
-              <Menu className="w-5 h-5" />
-            )}
+            <img
+              alt="FINKI Hub Logo"
+              className="w-12 h-12 object-contain"
+              src="/logo.png"
+            />
+            <span className="font-semibold text-lg group-hover:text-primary transition-colors">
+              {t.brand}
+            </span>
           </button>
-        </div>
-      </div>
 
-      {/* Mobile Navigation */}
-      {isMobileMenuOpen ? (
-        <div className="lg:hidden glass border-t border-border mt-3">
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-8">
+            {navLinks.map((link) => (
+              <a
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                href={link.href}
+                key={link.href}
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+
+          {/* Right side actions */}
+          <div className="hidden lg:flex items-center gap-2 xl:gap-3">
+            <LearnifyButton />
+            <ActionLink
+              className="gap-2"
+              href={GITHUB_URL}
+              icon={<GithubIcon className="w-4 h-4" />}
+              label={<span className="hidden xl:inline">GitHub</span>}
+            />
+            <LanguageToggle
+              groupLabel={t.nav.languageGroup}
+              language={language}
+              setLanguage={setLanguage}
+            />
+            <ThemeToggleButton
+              isDarkTheme={isDarkTheme}
+              themeLabel={themeLabel}
+              toggleLabel={t.theme.toggle}
+              toggleTheme={toggleTheme}
+            />
+            <ActionLink
+              className="gap-2"
+              href={DISCORD_URL}
+              icon={<DiscordIcon className="w-4 h-4" />}
+              label={<span className="hidden xl:inline">{t.discord}</span>}
+              variant="default"
+            />
+          </div>
+
+          <div className="flex items-center gap-2 lg:hidden">
+            <LearnifyButton pill />
+
+            {/* Mobile menu button */}
+            <button
+              aria-controls="mobile-navigation"
+              aria-expanded={isMobileMenuOpen}
+              aria-label={isMobileMenuOpen ? t.nav.closeMenu : t.nav.openMenu}
+              className="p-2 hover:bg-secondary rounded-lg transition-colors"
+              onClick={() => {
+                setIsMobileMenuOpen(!isMobileMenuOpen);
+              }}
+              type="button"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        <div
+          className="lg:hidden glass border-t border-border mt-3"
+          hidden={!isMobileMenuOpen}
+          id="mobile-navigation"
+        >
           <nav className="container py-4 flex flex-col gap-4">
             {navLinks.map((link) => (
               <a
@@ -156,6 +170,7 @@ export const Header = () => {
               />
             </div>
             <LanguageToggle
+              groupLabel={t.nav.languageGroup}
               language={language}
               mobile
               setLanguage={setLanguage}
@@ -169,7 +184,7 @@ export const Header = () => {
             />
           </nav>
         </div>
-      ) : null}
-    </header>
+      </header>
+    </>
   );
 };

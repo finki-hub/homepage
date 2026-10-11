@@ -1,11 +1,13 @@
 import { type ReactNode, useEffect, useMemo, useState } from 'react';
 
+import { readBrowserStorage, writeBrowserStorage } from '@/lib/safe-storage';
+
 import { type Theme, ThemeContext } from './ThemeContext';
 
 const STORAGE_KEY = 'finki-hub-theme';
 
 const getInitialTheme = (): Theme => {
-  const savedTheme = localStorage.getItem(STORAGE_KEY);
+  const savedTheme = readBrowserStorage(STORAGE_KEY);
   if (savedTheme === 'light' || savedTheme === 'dark') {
     return savedTheme;
   }
@@ -27,7 +29,7 @@ export const ThemeProvider = ({
   useEffect(() => {
     document.documentElement.dataset['kbTheme'] = theme;
     document.documentElement.style.colorScheme = theme;
-    localStorage.setItem(STORAGE_KEY, theme);
+    writeBrowserStorage(STORAGE_KEY, theme);
   }, [theme]);
 
   const contextValue = useMemo(

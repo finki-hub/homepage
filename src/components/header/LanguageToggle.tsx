@@ -3,6 +3,7 @@ import type { Language } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
 
 type LanguageToggleProps = {
+  readonly groupLabel: string;
   readonly language: Language;
   readonly mobile?: boolean;
   readonly setLanguage: (language: Language) => void;
@@ -11,6 +12,7 @@ type LanguageToggleProps = {
 const languages: Language[] = ['mk', 'en'];
 
 export const LanguageToggle = ({
+  groupLabel,
   language,
   mobile = false,
   setLanguage,
@@ -20,7 +22,7 @@ export const LanguageToggle = ({
     : 'text-muted-foreground hover:text-foreground';
 
   return (
-    <div
+    <fieldset
       className={cn(
         'flex items-center',
         mobile
@@ -28,8 +30,10 @@ export const LanguageToggle = ({
           : 'gap-1 px-2 py-1 rounded-lg bg-secondary/50',
       )}
     >
+      <legend className="sr-only">{groupLabel}</legend>
       {languages.map((option) => (
         <button
+          aria-pressed={language === option}
           className={cn(
             'rounded font-medium transition-all',
             mobile ? 'px-3 py-1.5 text-sm' : 'px-2 py-1 text-xs',
@@ -46,6 +50,6 @@ export const LanguageToggle = ({
           {option.toUpperCase()}
         </button>
       ))}
-    </div>
+    </fieldset>
   );
 };

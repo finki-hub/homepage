@@ -3,7 +3,9 @@ import {
   CalendarDays,
   ExternalLink,
   GraduationCap,
+  MessagesSquare,
   Sparkles,
+  Terminal,
   Video,
 } from 'lucide-react';
 
@@ -16,9 +18,20 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { useLanguage } from '@/hooks/useLanguage';
+import { LEARNIFY_DISCORD_URL } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
-const platformIcons = [BookOpen, GraduationCap, Video, CalendarDays, Sparkles];
+import { DiscordIcon } from './icons/DiscordIcon';
+
+const platformIcons = [
+  BookOpen,
+  GraduationCap,
+  Video,
+  CalendarDays,
+  Sparkles,
+  Terminal,
+  MessagesSquare,
+];
 
 export const Platforms = () => {
   const { t } = useLanguage();
@@ -38,7 +51,7 @@ export const Platforms = () => {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 max-w-7xl mx-auto">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-8 max-w-7xl mx-auto">
           {t.platforms.items.map((platform, index) => {
             const Icon = platformIcons[index];
             if (!Icon) return null;
@@ -47,6 +60,10 @@ export const Platforms = () => {
               <Card
                 className={cn(
                   'group glass glass-hover card-glow border-border/50 flex flex-col',
+                  'xl:col-span-2',
+                  index === 4 && 'xl:col-start-2',
+                  index === 6 &&
+                    'sm:col-span-2 sm:w-1/2 sm:justify-self-center lg:col-span-1 lg:col-start-2 lg:w-full xl:col-start-auto',
                   isLearnify &&
                     'card-glow-learnify overflow-hidden border-[hsl(28_70%_72%/0.4)] shadow-[0_20px_40px_-34px_hsl(28_88%_52%/0.35)] dark:border-[hsl(28_40%_40%/0.45)] dark:shadow-[0_20px_40px_-34px_hsl(28_88%_52%/0.22)]',
                 )}
@@ -92,7 +109,7 @@ export const Platforms = () => {
                     className={cn(
                       'w-full gap-2',
                       isLearnify &&
-                        'border-[hsl(28_70%_72%/0.7)] bg-[hsl(30_100%_97%/0.86)] text-[hsl(28_88%_42%)] hover:bg-[hsl(30_100%_94%/0.96)] dark:border-[hsl(28_40%_40%/0.7)] dark:bg-[hsl(28_30%_20%/0.7)] dark:text-[hsl(35_95%_72%)] dark:hover:bg-[hsl(28_30%_24%/0.9)]',
+                        'border-[hsl(28_70%_72%/0.7)] bg-[hsl(30_100%_97%/0.86)] text-[hsl(28_88%_35%)] hover:bg-[hsl(30_100%_94%/0.96)] dark:border-[hsl(28_40%_40%/0.7)] dark:bg-[hsl(28_30%_20%/0.7)] dark:text-[hsl(35_95%_72%)] dark:hover:bg-[hsl(28_30%_24%/0.9)]',
                     )}
                     size="sm"
                     variant={isLearnify ? 'outline' : 'default'}
@@ -106,6 +123,23 @@ export const Platforms = () => {
                       {t.platforms.visitButton}
                     </a>
                   </Button>
+                  {isLearnify ? (
+                    <Button
+                      asChild
+                      className="mt-1 w-full gap-2 text-[hsl(28_88%_35%)] hover:bg-[hsl(30_100%_94%/0.75)] hover:text-[hsl(28_88%_35%)] dark:text-[hsl(35_95%_72%)] dark:hover:bg-[hsl(28_30%_24%/0.8)]"
+                      size="sm"
+                      variant="ghost"
+                    >
+                      <a
+                        href={LEARNIFY_DISCORD_URL}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        <DiscordIcon className="h-4 w-4" />
+                        {t.platforms.discordButton}
+                      </a>
+                    </Button>
+                  ) : null}
                 </CardContent>
               </Card>
             );

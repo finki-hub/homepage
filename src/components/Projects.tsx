@@ -116,7 +116,7 @@ export const Projects = () => {
         <div className="text-center">
           <Button
             asChild
-            className="gap-2"
+            className="h-auto min-h-11 max-w-full flex-wrap gap-2 whitespace-normal px-4 text-center sm:px-8"
             size="lg"
             variant="outline"
           >

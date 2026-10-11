@@ -64,8 +64,11 @@ export const translations = {
     },
     // Header
     nav: {
+      closeMenu: 'Close menu',
       community: 'Community',
       contribute: 'Contribute',
+      languageGroup: 'Language',
+      openMenu: 'Open menu',
       platforms: 'Platforms',
       projects: 'Projects',
     },
@@ -97,29 +100,30 @@ export const translations = {
     },
     // Platforms
     platforms: {
+      discordButton: 'Discord',
       items: [
         {
           description:
             'Browse detailed information about FINKI courses — syllabi, materials, and more.',
-          name: 'Предмети',
+          name: 'Courses',
           url: 'https://predmeti.finki-hub.com',
         },
         {
           description:
             'Explore completed diploma theses, search by topic, mentor, or year.',
-          name: 'Дипломски',
+          name: 'Theses',
           url: 'https://diplomski.finki-hub.com',
         },
         {
           description:
             'Watch recorded lectures and study sessions for FINKI courses.',
-          name: 'Снимки',
+          name: 'Recordings',
           url: 'https://snimki.finki-hub.com',
         },
         {
           description:
             'Browse current and historical FINKI class timetables in one place.',
-          name: 'Распореди',
+          name: 'Schedules',
           url: 'https://rasporedi.finki-hub.com',
         },
         {
@@ -127,6 +131,17 @@ export const translations = {
             'Private tutoring and guided study support for FINKI students.',
           name: 'Learnify',
           url: 'https://learnify.mk',
+        },
+        {
+          description:
+            'Open a disposable Ubuntu environment in your browser, with a terminal and file browser.',
+          name: 'Shell',
+          url: 'https://shell.finki-hub.com',
+        },
+        {
+          description: 'A student chat app powered by the FINKI Hub chatbot.',
+          name: 'Chat',
+          url: 'https://chat.finki-hub.com',
         },
       ],
       subtitle: 'Web platforms built for students of FINKI',
@@ -167,6 +182,7 @@ export const translations = {
       subtitle: 'Main tools built by the community',
       title: 'Projects',
     },
+    skipToContent: 'Skip to main content',
     theme: {
       dark: 'Dark',
       light: 'Light',
@@ -236,8 +252,11 @@ export const translations = {
     },
     // Header
     nav: {
+      closeMenu: 'Затвори мени',
       community: 'Заедница',
       contribute: 'Придонеси',
+      languageGroup: 'Јазик',
+      openMenu: 'Отвори мени',
       platforms: 'Платформи',
       projects: 'Проекти',
     },
@@ -269,6 +288,7 @@ export const translations = {
     },
     // Platforms
     platforms: {
+      discordButton: 'Дискорд',
       items: [
         {
           description:
@@ -299,6 +319,18 @@ export const translations = {
             'Приватни часови и насочена поддршка за учење за студенти на ФИНКИ.',
           name: 'Learnify',
           url: 'https://learnify.mk',
+        },
+        {
+          description:
+            'Отвори привремена Ubuntu околина во прелистувачот со терминал и прелистувач на датотеки.',
+          name: 'Школка',
+          url: 'https://shell.finki-hub.com',
+        },
+        {
+          description:
+            'Апликација за разговор за студенти, поддржана од чет-ботот на ФИНКИ Хаб.',
+          name: 'Чет',
+          url: 'https://chat.finki-hub.com',
         },
       ],
       subtitle: 'Веб платформи создадени за студентите на ФИНКИ',
@@ -339,6 +371,7 @@ export const translations = {
       subtitle: 'Главни алатки создадени од заедницата',
       title: 'Проекти',
     },
+    skipToContent: 'Прескокни до главната содржина',
     theme: {
       dark: 'Темна',
       light: 'Светла',

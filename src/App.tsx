@@ -19,7 +19,11 @@ const App = () => {
       <LanguageProvider>
         <div className="min-h-screen bg-background">
           <Header />
-          <main>
+          <main
+            className="scroll-mt-20"
+            id="main-content"
+            tabIndex={-1}
+          >
             <Hero />
             <Overview />
             <Platforms />
