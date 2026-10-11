@@ -28,7 +28,7 @@ export const BackToTop = () => {
   return (
     <Button
       aria-label={t.backToTop}
-      className="fixed bottom-6 right-6 z-50 rounded-full shadow-lg glow-primary-sm animate-fade-in"
+      className="fixed bottom-6 right-[calc(1.5rem+var(--removed-body-scroll-bar-size,0px))] z-50 rounded-full shadow-lg glow-primary-sm animate-fade-in"
       onClick={scrollToTop}
       size="icon"
     >

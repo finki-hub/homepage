@@ -4,7 +4,7 @@ This is the homepage for FINKI Hub, the independent student organization.
 
 ## Features
 
-- 🌍 **Multi-language support** - English and Macedonian translations
+- 🌍 **Multi-language support** - Macedonian, English, Albanian, and Turkish translations, including page titles and social metadata
 - 🎨 **Dark/Light theme** - Toggle between light and dark modes
 - ⚡ **Lightning fast** - Built with React and Vite
 - 📱 **Fully responsive** - Mobile-first design with Tailwind CSS

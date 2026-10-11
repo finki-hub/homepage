@@ -6,7 +6,7 @@ import { useTheme } from '@/hooks/useTheme';
 import { DISCORD_URL, GITHUB_URL } from '@/lib/constants';
 
 import { ActionLink } from './header/ActionLink';
-import { LanguageToggle } from './header/LanguageToggle';
+import { LanguageSelect } from './header/LanguageSelect';
 import { LearnifyButton } from './header/LearnifyButton';
 import { ThemeToggleButton } from './header/ThemeToggleButton';
 import { DiscordIcon } from './icons/DiscordIcon';
@@ -46,7 +46,7 @@ export const Header = () => {
         {t.skipToContent}
       </a>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-[var(--removed-body-scroll-bar-size,0px)] z-50 transition-[padding,background-color,border-color,backdrop-filter] duration-300 ${
           isScrolled ? 'glass py-3' : 'bg-transparent py-5'
         }`}
       >
@@ -91,8 +91,8 @@ export const Header = () => {
               icon={<GithubIcon className="w-4 h-4" />}
               label={<span className="hidden xl:inline">GitHub</span>}
             />
-            <LanguageToggle
-              groupLabel={t.nav.languageGroup}
+            <LanguageSelect
+              label={t.nav.languageGroup}
               language={language}
               setLanguage={setLanguage}
             />
@@ -172,8 +172,8 @@ export const Header = () => {
                 label="GitHub"
               />
             </div>
-            <LanguageToggle
-              groupLabel={t.nav.languageGroup}
+            <LanguageSelect
+              label={t.nav.languageGroup}
               language={language}
               mobile
               setLanguage={setLanguage}

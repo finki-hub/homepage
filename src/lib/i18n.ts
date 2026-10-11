@@ -1,6 +1,9 @@
-export type Language = 'en' | 'mk';
+import { sq } from './locales/sq.ts';
+import { tr } from './locales/tr.ts';
 
-export const translations = {
+export type Language = keyof typeof dictionaries;
+
+const dictionaries = {
   en: {
     // Common
     backToTop: 'Back to top',
@@ -28,7 +31,7 @@ export const translations = {
       onlineLabel: 'Online now',
       openButton: 'Open in Discord',
       publicChannelsLabel: 'Public channels',
-      subtitle: 'The main student server for everything around FINKI',
+      subtitle: 'The main student server for everything around FCSE',
       title: 'Discord Community',
       totalMembersLabel: 'Members',
       voiceChannels: 'Voice channels',
@@ -49,7 +52,7 @@ export const translations = {
     footer: {
       copyright:
         '© {year} FINKI Hub. Independent student platform. All rights reserved.',
-      madeWith: 'Made with ❤️ for students of FINKI',
+      madeWith: 'Made with ❤️ for students of FCSE',
     },
     // Hero
     hero: {
@@ -58,9 +61,14 @@ export const translations = {
       cta: 'Explore Platforms',
       ctaSecondary: 'Join Discord',
       subtitle:
-        'A student initiative building tools and resources for students of FINKI. By students, for students.',
+        'A student initiative building tools and resources for students of FCSE. By students, for students.',
       title: 'FINKI Hub',
       titleAccent: 'independent student organization',
+    },
+    metadata: {
+      description:
+        'An independent student organization building tools and resources for students of FCSE.',
+      title: 'FINKI Hub',
     },
     // Header
     nav: {
@@ -77,7 +85,7 @@ export const translations = {
       cards: [
         {
           description:
-            'An independent initiative led by students for students. Not officially affiliated with FINKI.',
+            'An independent initiative led by students for students. Not officially affiliated with FCSE.',
           title: 'Student Organization',
         },
         {
@@ -92,7 +100,7 @@ export const translations = {
         },
         {
           description:
-            'Stay up to date with the latest news, announcements, and events from FINKI.',
+            'Stay up to date with the latest news, announcements, and events from FCSE.',
           title: 'Latest Information',
         },
       ],
@@ -104,7 +112,7 @@ export const translations = {
       items: [
         {
           description:
-            'Browse detailed information about FINKI courses — syllabi, materials, and more.',
+            'Browse detailed information about FCSE courses — syllabi, materials, and more.',
           name: 'Courses',
           url: 'https://predmeti.finki-hub.com',
         },
@@ -116,19 +124,19 @@ export const translations = {
         },
         {
           description:
-            'Watch recorded lectures and study sessions for FINKI courses.',
+            'Watch recorded lectures and study sessions for FCSE courses.',
           name: 'Recordings',
           url: 'https://snimki.finki-hub.com',
         },
         {
           description:
-            'Browse current and historical FINKI class timetables in one place.',
+            'Browse current and historical FCSE class timetables in one place.',
           name: 'Schedules',
           url: 'https://rasporedi.finki-hub.com',
         },
         {
           description:
-            'Private tutoring and guided study support for FINKI students.',
+            'Private tutoring and guided study support for FCSE students.',
           name: 'Learnify',
           url: 'https://learnify.mk',
         },
@@ -144,7 +152,7 @@ export const translations = {
           url: 'https://chat.finki-hub.com',
         },
       ],
-      subtitle: 'Web platforms built for students of FINKI',
+      subtitle: 'Web platforms built for students of FCSE',
       title: 'Platforms',
       visitButton: 'Visit',
     },
@@ -154,9 +162,9 @@ export const translations = {
       items: [
         {
           description:
-            'The core system - scrapes public FINKI pages and structures data.',
+            'The core system - scrapes public FCSE pages and structures data.',
           details:
-            'Automated collection of announcements, schedules, news, and other public information from FINKI websites.',
+            'Automated collection of announcements, schedules, news, and other public information from FCSE websites.',
           name: 'services-scraper',
           tags: ['Node.js', 'TypeScript'],
         },
@@ -249,6 +257,11 @@ export const translations = {
         'Студентска иницијатива која гради алатки и ресурси за студентите на ФИНКИ. Од студенти, за студенти.',
       title: 'ФИНКИ Хаб',
       titleAccent: 'независна студентска организација',
+    },
+    metadata: {
+      description:
+        'Независна студентска организација која гради алатки и ресурси за студентите на ФИНКИ.',
+      title: 'ФИНКИ Хаб',
     },
     // Header
     nav: {
@@ -378,6 +391,24 @@ export const translations = {
       toggle: 'Промени тема',
     },
   },
+  sq,
+  tr,
 } as const;
 
-export type Translations = typeof translations.mk;
+export type Translations = Localized<typeof dictionaries.en>;
+
+type Localized<T> = T extends string
+  ? string
+  : { readonly [Key in keyof T]: Localized<T[Key]> };
+
+export const translations: Record<Language, Translations> = dictionaries;
+
+export const languageNames = {
+  en: 'English',
+  mk: 'Македонски',
+  sq: 'Shqip',
+  tr: 'Türkçe',
+} as const satisfies Record<Language, string>;
+
+export const isLanguage = (value: unknown): value is Language =>
+  typeof value === 'string' && Object.hasOwn(translations, value);
