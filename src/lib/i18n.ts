@@ -118,9 +118,9 @@ const dictionaries = {
         },
         {
           description:
-            'Explore completed diploma theses, search by topic, mentor, or year.',
+            "Explore completed bachelor's or master's theses, search by topic, mentor, or year.",
           name: 'Theses',
-          url: 'https://diplomski.finki-hub.com',
+          url: 'https://theses.finki-hub.com',
         },
         {
           description:
@@ -311,9 +311,9 @@ const dictionaries = {
         },
         {
           description:
-            'Истражи завршени дипломски работи, пребарувај по тема, ментор или година.',
-          name: 'Дипломски',
-          url: 'https://diplomski.finki-hub.com',
+            'Истражи завршни дипломски или магистерски трудови, пребарувај по тема, ментор или година.',
+          name: 'Трудови',
+          url: 'https://trudovi.finki-hub.com',
         },
         {
           description:

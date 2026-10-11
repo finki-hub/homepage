@@ -103,9 +103,9 @@ export const sq = {
       },
       {
         description:
-          'Shfleto punimet e përfunduara të diplomës dhe kërko sipas temës, mentorit ose vitit.',
+          'Shfleto punimet e përfunduara të diplomës në nivelin bachelor ose master dhe kërko sipas temës, mentorit ose vitit.',
         name: 'Punime diplome',
-        url: 'https://diplomski.finki-hub.com',
+        url: 'https://theses.finki-hub.com',
       },
       {
         description:

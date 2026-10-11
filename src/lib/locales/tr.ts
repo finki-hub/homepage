@@ -103,9 +103,9 @@ export const tr = {
       },
       {
         description:
-          'Tamamlanmış bitirme tezlerini inceleyin; konu, danışman veya yıla göre arayın.',
+          'Tamamlanmış lisans veya yüksek lisans tezlerini inceleyin; konu, danışman veya yıla göre arayın.',
         name: 'Tezler',
-        url: 'https://diplomski.finki-hub.com',
+        url: 'https://theses.finki-hub.com',
       },
       {
         description:

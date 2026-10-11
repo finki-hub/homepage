@@ -11,10 +11,11 @@ import {
 
 // Only the public entrance links in constants.ts and i18n.ts have a metric.
 const SERVICE_LINKS = new Map([
-  ['https://diplomski.finki-hub.com/', 'diplomas'],
   ['https://predmeti.finki-hub.com/', 'courses-listing'],
   ['https://rasporedi.finki-hub.com/', 'schedules'],
   ['https://snimki.finki-hub.com/', 'recordings'],
+  ['https://theses.finki-hub.com/', 'diplomas'],
+  ['https://trudovi.finki-hub.com/', 'diplomas'],
   [`${CHAT_URL}/`, 'chat'],
   [`${LEARNIFY_URL}/`, 'learnify'],
   [`${SHELL_URL}/`, 'shell'],

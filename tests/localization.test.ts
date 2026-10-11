@@ -60,10 +60,15 @@ test('production HTML contains localized defaults before JavaScript runs', async
 
 test('translations preserve resource ordering, repository names and year interpolation', () => {
   const english = translations.en;
-  for (const translation of Object.values(translations)) {
+  for (const [language, translation] of Object.entries(translations)) {
+    const expectedPlatformUrls = english.platforms.items.map(({ url }) => url);
+    expectedPlatformUrls[1] =
+      language === 'mk'
+        ? 'https://trudovi.finki-hub.com'
+        : 'https://theses.finki-hub.com';
     assert.deepEqual(
       translation.platforms.items.map(({ url }) => url),
-      english.platforms.items.map(({ url }) => url),
+      expectedPlatformUrls,
     );
     assert.deepEqual(
       translation.projects.items.map(({ name, tags }) => ({ name, tags })),
