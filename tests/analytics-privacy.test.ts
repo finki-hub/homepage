@@ -154,7 +154,7 @@ test('public registry links map to fixed IDs, never destinations or DOM labels',
       language.platforms.items.map(({ url }) => serviceForLink(url)),
       [
         'courses-listing',
-        'diplomas',
+        'theses-listing',
         'recordings',
         'schedules',
         'learnify',
