@@ -1,6 +1,15 @@
-import { ChevronDown } from 'lucide-react';
-import { useId } from 'react';
+import { Globe } from 'lucide-react';
+import { useId, useRef } from 'react';
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { isLanguage, type Language, languageNames } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
 
@@ -18,50 +27,119 @@ export const LanguageSelect = ({
   setLanguage,
 }: LanguageSelectProps) => {
   const id = useId();
-  const options = Object.entries(languageNames);
+  const languages = Object.keys(languageNames).filter(isLanguage);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  // Radix restores focus from script, which browsers treat as keyboard focus,
+  // so a mouse pick would otherwise leave the focus ring on the trigger.
+  const usedPointerRef = useRef(false);
+  const markPointer = () => {
+    usedPointerRef.current = true;
+  };
+  const markKeyboard = () => {
+    usedPointerRef.current = false;
+  };
 
   return (
-    <div
-      className={cn(
-        mobile &&
-          'flex items-center justify-between gap-3 pt-4 border-t border-border',
-      )}
-    >
+    <div className={cn(mobile && 'border-t border-border pt-4')}>
       <label
-        className={mobile ? 'text-sm font-medium' : 'sr-only'}
+        className="sr-only"
         htmlFor={id}
+        id={`${id}-label`}
       >
         {label}
       </label>
-      <div className="relative min-w-0">
-        <select
+      <Select
+        onValueChange={(value) => {
+          if (isLanguage(value)) setLanguage(value);
+        }}
+        value={language}
+      >
+        <SelectTrigger
           className={cn(
-            'w-full appearance-none rounded-xl border border-input bg-background py-2 ps-3 pe-9 text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
-            mobile ? 'min-h-11 text-base' : 'h-10 text-sm',
+            'transition-colors [&>svg:last-child]:transition-transform [&[data-state=open]>svg:last-child]:rotate-180',
+            mobile
+              ? 'h-auto min-h-11 gap-3 rounded-xl border-border bg-background/70 font-medium hover:bg-muted'
+              : 'w-auto gap-1.5 rounded-xl border-border/60 bg-background/80 px-3 font-medium shadow-sm backdrop-blur-sm hover:bg-muted data-[state=open]:bg-muted',
           )}
           id={id}
-          onChange={(event) => {
-            const { value } = event.currentTarget;
-            if (isLanguage(value)) setLanguage(value);
-          }}
-          value={language}
+          onKeyDown={markKeyboard}
+          onPointerDown={markPointer}
+          ref={triggerRef}
         >
-          {options.map(([code, name]) => (
-            <option
-              className="bg-background text-foreground"
-              key={code}
-              lang={code}
-              value={code}
-            >
-              {name}
-            </option>
-          ))}
-        </select>
-        <ChevronDown
-          aria-hidden="true"
-          className="pointer-events-none absolute end-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
-        />
-      </div>
+          {mobile ? (
+            <>
+              <span aria-hidden="true">{label}</span>
+              <span className="ml-auto flex items-center gap-2 font-normal text-muted-foreground">
+                <Globe className="size-4" />
+                <SelectValue>
+                  <span lang={language}>{languageNames[language]}</span>
+                </SelectValue>
+              </span>
+            </>
+          ) : (
+            <>
+              <Globe className="size-4" />
+              <SelectValue>
+                <span title={languageNames[language]}>
+                  {language.toUpperCase()}
+                </span>
+              </SelectValue>
+            </>
+          )}
+        </SelectTrigger>
+        <SelectContent
+          align="end"
+          aria-labelledby={`${id}-label`}
+          className="min-w-52 rounded-xl border-border/60 bg-popover/95 shadow-lg backdrop-blur-md"
+          onCloseAutoFocus={(event) => {
+            if (!usedPointerRef.current) return;
+            event.preventDefault();
+            triggerRef.current?.focus({
+              focusVisible: false,
+              preventScroll: true,
+            });
+          }}
+          onKeyDown={markKeyboard}
+          onPointerDown={markPointer}
+          onPointerDownOutside={markPointer}
+          position="popper"
+          sideOffset={6}
+        >
+          <SelectGroup>
+            {!mobile && (
+              <SelectLabel className="pb-1 text-xs font-medium text-muted-foreground">
+                {label}
+              </SelectLabel>
+            )}
+            {languages.map((code) => (
+              <SelectItem
+                className={cn(
+                  'group gap-3 rounded-lg focus:bg-muted focus:text-foreground [&_svg]:text-primary',
+                  mobile ? 'min-h-11' : 'min-h-10',
+                )}
+                key={code}
+                textValue={languageNames[code]}
+                value={code}
+              >
+                <span className="flex items-center gap-3">
+                  <span
+                    aria-hidden="true"
+                    className="inline-flex h-6 w-8 items-center justify-center rounded-md border border-border bg-muted/60 text-[0.6875rem] font-semibold tracking-wide text-muted-foreground transition-colors group-data-[state=checked]:border-primary/30 group-data-[state=checked]:bg-primary/10 group-data-[state=checked]:text-primary"
+                  >
+                    {code.toUpperCase()}
+                  </span>
+                  <span
+                    className="group-data-[state=checked]:font-medium"
+                    lang={code}
+                  >
+                    {languageNames[code]}
+                  </span>
+                </span>
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
     </div>
   );
 };
