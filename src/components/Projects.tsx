@@ -27,7 +27,7 @@ export const Projects = () => {
 
   return (
     <section
-      className="py-16 md:py-24"
+      className="scroll-mt-7 py-16 md:scroll-mt-0 md:py-24"
       id="projects"
     >
       <div className="container">
