@@ -8,6 +8,19 @@ import { GithubIcon } from './icons/GithubIcon';
 
 export const Footer = () => {
   const { t } = useLanguage();
+  const heart = '❤️';
+  const heartIndex = t.footer.madeWith.indexOf(heart);
+  const afterHeartIndex = heartIndex + heart.length;
+  const nextHeartIndex = t.footer.madeWith.indexOf(heart, afterHeartIndex);
+  const beforeHeartEnd =
+    heartIndex === -1 ? t.footer.madeWith.length : heartIndex;
+  const afterHeartEnd =
+    nextHeartIndex === -1 ? t.footer.madeWith.length : nextHeartIndex;
+  const beforeHeart = t.footer.madeWith.slice(0, beforeHeartEnd).trim();
+  const afterHeart =
+    heartIndex === -1
+      ? ''
+      : t.footer.madeWith.slice(afterHeartIndex, afterHeartEnd).trim();
 
   const links = [
     { href: '#projects', label: t.nav.projects },
@@ -83,9 +96,9 @@ export const Footer = () => {
         {/* Made with love */}
         <div className="mt-8 pt-8 border-t border-border/50 text-center">
           <p className="text-xs text-muted-foreground flex items-center justify-center gap-1">
-            {t.footer.madeWith.split('❤️', 1)[0]?.trim() ?? ''}
+            {beforeHeart}
             <Heart className="w-3 h-3 text-destructive fill-current inline" />
-            {t.footer.madeWith.split('❤️', 2)[1]?.trim() ?? ''}
+            {afterHeart}
           </p>
         </div>
       </div>

@@ -10,14 +10,8 @@ import {
 
 const ABORTED_REGEX = /aborted/iu;
 
-const createPendingPromise = <Value = never>() => {
-  let resolvePending!: (value: Value) => void;
-  const promise = new Promise<Value>((resolve) => {
-    resolvePending = resolve;
-  });
-
-  return { promise, resolvePending };
-};
+const createPendingPromise = <Value = never>() =>
+  Promise.withResolvers<Value>();
 
 const widget = {
   id: 'server-id',
@@ -26,18 +20,16 @@ const widget = {
   presence_count: 12,
 };
 
-const jsonResponse = (data: typeof widget): Response =>
-  Response.json(data, { status: 200 });
+const jsonResponse = (): Response => Response.json(widget, { status: 200 });
 
 test('malformed optional invite data does not discard a valid widget', async () => {
   const result = await fetchDiscordCommunity({
-    fetcher: (url) => {
-      if (url === DISCORD_WIDGET_API_URL) {
-        return Promise.resolve(jsonResponse(widget));
-      }
-
-      return Promise.resolve(new Response('{malformed json', { status: 200 }));
-    },
+    fetcher: (url) =>
+      Promise.resolve(
+        url === DISCORD_WIDGET_API_URL
+          ? jsonResponse()
+          : new Response('{malformed json', { status: 200 }),
+      ),
     inviteSignal: new AbortController().signal,
     timeoutMs: 100,
     widgetSignal: new AbortController().signal,
@@ -52,7 +44,7 @@ test('a never-settling optional invite times out without delaying the widget', a
   const result = await fetchDiscordCommunity({
     fetcher: (url, { signal } = {}) => {
       if (url === DISCORD_WIDGET_API_URL) {
-        return Promise.resolve(jsonResponse(widget));
+        return Promise.resolve(jsonResponse());
       }
 
       assert.equal(url, DISCORD_INVITE_API_URL);
@@ -74,7 +66,7 @@ test('a never-settling invite body is also bounded independently', async () => {
   const result = await fetchDiscordCommunity({
     fetcher: (url, { signal } = {}) => {
       if (url === DISCORD_WIDGET_API_URL) {
-        return Promise.resolve(jsonResponse(widget));
+        return Promise.resolve(jsonResponse());
       }
 
       inviteSignal = signal ?? undefined;
@@ -97,10 +89,8 @@ test('aborting on unmount cancels both pending Discord requests', async () => {
   const widgetController = new AbortController();
   const inviteController = new AbortController();
   const requestSignals = new Map<string, AbortSignal | null | undefined>();
-  let resolveRequestsStarted!: () => void;
-  const requestsStarted = new Promise<void>((resolve) => {
-    resolveRequestsStarted = resolve;
-  });
+  const { promise: requestsStarted, resolve: resolveRequestsStarted } =
+    Promise.withResolvers<undefined>();
   const pending = fetchDiscordCommunity({
     fetcher: (url, { signal } = {}) => {
       let requestUrl: string;
@@ -109,7 +99,7 @@ test('aborting on unmount cancels both pending Discord requests', async () => {
       else requestUrl = url.url;
       requestSignals.set(requestUrl, signal);
       if (requestSignals.size === 2) {
-        resolveRequestsStarted();
+        resolveRequestsStarted(undefined);
       }
       return createPendingPromise<Response>().promise;
     },

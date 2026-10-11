@@ -17,6 +17,13 @@ const config = [
   typescript,
   prettier,
   perfectionist,
+  {
+    files: ['vite.config.js'],
+    rules: {
+      // Vite's configuration entrypoint intentionally instantiates build plugins.
+      'unicorn/no-top-level-side-effects': 'off',
+    },
+  },
 ];
 
 export default config;

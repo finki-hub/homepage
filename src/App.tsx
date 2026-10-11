@@ -11,7 +11,7 @@ import { LanguageProvider } from '@/hooks/LanguageProvider';
 import { ThemeProvider } from '@/hooks/ThemeProvider';
 import { useCardGlow } from '@/hooks/useCardGlow';
 
-const App = () => {
+export default function App() {
   useCardGlow();
 
   return (
@@ -37,6 +37,4 @@ const App = () => {
       </LanguageProvider>
     </ThemeProvider>
   );
-};
-
-export default App;
+}

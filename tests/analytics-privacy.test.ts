@@ -30,10 +30,9 @@ const BASE_PROPERTIES = {
 // boundary, so keep the single unsafe conversion local to the test helper.
 const sanitizeAnalyticsEvent = (
   event: unknown,
-  token: string = TOKEN,
   revision?: unknown,
 ): CaptureResult | null =>
-  sanitizeAnalyticsEventImpl(event as CaptureResult | null, token, revision);
+  sanitizeAnalyticsEventImpl(event as CaptureResult | null, TOKEN, revision);
 
 test('rebuilds both payload levels; trusted fields cannot be overridden', () => {
   for (const event of ['homepage_view', 'service_navigation_intent']) {
@@ -60,7 +59,7 @@ test('rebuilds both payload levels; trusted fields cannot be overridden', () => 
       timestamp: new Date(1_767_225_600_000),
       uuid: ID,
     };
-    assert.deepEqual(sanitizeAnalyticsEvent(input, TOKEN, REVISION), {
+    assert.deepEqual(sanitizeAnalyticsEvent(input, REVISION), {
       event,
       properties: {
         ...BASE_PROPERTIES,
@@ -81,16 +80,14 @@ test('rebuilds both payload levels; trusted fields cannot be overridden', () => 
       'A'.repeat(40),
       PRIVATE_URL,
     ]) {
-      const sanitized = sanitizeAnalyticsEvent(input, TOKEN, revision);
+      const sanitized = sanitizeAnalyticsEvent(input, revision);
       assert.ok(sanitized);
       assert.equal('app_revision' in sanitized.properties, false);
     }
     assert.equal(input.properties.$current_url, PRIVATE_URL);
     input.timestamp.toJSON = () => PRIVATE;
     assert.equal(
-      JSON.stringify(sanitizeAnalyticsEvent(input, TOKEN, REVISION)).includes(
-        PRIVATE,
-      ),
+      JSON.stringify(sanitizeAnalyticsEvent(input, REVISION)).includes(PRIVATE),
       false,
     );
   }
@@ -110,7 +107,7 @@ test('unknown events and malformed service IDs/technical metadata cannot carry d
     'constructor',
   ]) {
     assert.equal(
-      sanitizeAnalyticsEvent({ event, properties: {}, uuid: ID }, TOKEN),
+      sanitizeAnalyticsEvent({ event, properties: {}, uuid: ID }),
       null,
     );
   }
@@ -121,41 +118,32 @@ test('unknown events and malformed service IDs/technical metadata cannot carry d
     'constructor',
   ]) {
     assert.equal(
-      sanitizeAnalyticsEvent(
-        {
-          event: 'service_navigation_intent',
-          properties: { service_id },
-          uuid: ID,
-        },
-        TOKEN,
-      ),
+      sanitizeAnalyticsEvent({
+        event: 'service_navigation_intent',
+        properties: { service_id },
+        uuid: ID,
+      }),
       null,
     );
   }
   for (const uuid of [undefined, PRIVATE_URL, { nested: PRIVATE }]) {
     assert.equal(
-      sanitizeAnalyticsEvent(
-        { event: 'homepage_view', properties: {}, uuid },
-        TOKEN,
-      ),
+      sanitizeAnalyticsEvent({ event: 'homepage_view', properties: {}, uuid }),
       null,
     );
   }
-  assert.equal(sanitizeAnalyticsEvent(null, TOKEN), null);
+  assert.equal(sanitizeAnalyticsEvent(null), null);
   assert.deepEqual(
-    sanitizeAnalyticsEvent(
-      {
-        event: 'homepage_view',
-        properties: {
-          $device_id: PRIVATE_URL,
-          $lib_version: PRIVATE,
-          distinct_id: PRIVATE,
-        },
-        timestamp: PRIVATE_URL,
-        uuid: ID,
+    sanitizeAnalyticsEvent({
+      event: 'homepage_view',
+      properties: {
+        $device_id: PRIVATE_URL,
+        $lib_version: PRIVATE,
+        distinct_id: PRIVATE,
       },
-      TOKEN,
-    ),
+      timestamp: PRIVATE_URL,
+      uuid: ID,
+    }),
     { event: 'homepage_view', properties: BASE_PROPERTIES, uuid: ID },
   );
 });
@@ -204,10 +192,8 @@ test(
     });
     t.after(() => Reflect.deleteProperty(globalThis, 'location'));
     const requests: Array<{ body: unknown; url: string }> = [];
-    let complete!: () => void;
-    const sent = new Promise<void>((resolve) => {
-      complete = resolve;
-    });
+    const { promise: sent, resolve: complete } =
+      Promise.withResolvers<undefined>();
     t.mock.method(
       globalThis,
       'fetch',
@@ -217,7 +203,7 @@ test(
         else if (url instanceof URL) requestUrl = url.href;
         else requestUrl = url.url;
         requests.push({ body: options?.body, url: requestUrl });
-        if (requests.length === 3) complete();
+        if (requests.length === 3) complete(undefined);
         return Promise.resolve(new Response('{}', { status: 200 }));
       },
     );

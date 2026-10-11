@@ -7,8 +7,8 @@ type ActionLinkProps = {
   readonly href: string;
   readonly icon: ReactNode;
   readonly label: ReactNode;
-  readonly size?: ButtonProps['size'];
-  readonly variant?: ButtonProps['variant'];
+  readonly size?: Exclude<ButtonProps['size'], undefined>;
+  readonly variant?: Exclude<ButtonProps['variant'], undefined>;
 };
 
 export const ActionLink = ({
