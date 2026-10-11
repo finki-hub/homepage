@@ -16,11 +16,11 @@ export const Footer = () => {
     heartIndex === -1 ? t.footer.madeWith.length : heartIndex;
   const afterHeartEnd =
     nextHeartIndex === -1 ? t.footer.madeWith.length : nextHeartIndex;
-  const beforeHeart = t.footer.madeWith.slice(0, beforeHeartEnd).trim();
+  const beforeHeart = t.footer.madeWith.slice(0, beforeHeartEnd);
   const afterHeart =
     heartIndex === -1
       ? ''
-      : t.footer.madeWith.slice(afterHeartIndex, afterHeartEnd).trim();
+      : t.footer.madeWith.slice(afterHeartIndex, afterHeartEnd);
 
   const links = [
     { href: '#projects', label: t.nav.projects },
@@ -95,9 +95,15 @@ export const Footer = () => {
 
         {/* Made with love */}
         <div className="mt-8 pt-8 border-t border-border/50 text-center">
-          <p className="text-xs text-muted-foreground flex items-center justify-center gap-1">
+          <p className="text-xs text-muted-foreground">
             {beforeHeart}
-            <Heart className="w-3 h-3 text-destructive fill-current inline" />
+            <span className="inline-flex align-middle">
+              <Heart
+                aria-hidden="true"
+                className="size-3 text-destructive fill-current"
+              />
+              <span className="sr-only">{heart}</span>
+            </span>
             {afterHeart}
           </p>
         </div>
