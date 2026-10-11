@@ -9,7 +9,7 @@ export const Overview = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="py-24 section-gradient">
+    <section className="py-16 md:py-24 section-gradient">
       <div className="container">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
           {t.overview.title}

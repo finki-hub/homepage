@@ -20,7 +20,7 @@ export const LearnifyButton = ({
   <ActionLink
     className={cn(
       learnifyButtonClassName,
-      pill && 'h-9 gap-1.5 rounded-full px-3',
+      pill && 'h-11 gap-1.5 rounded-full px-3',
       className,
     )}
     href={LEARNIFY_URL}

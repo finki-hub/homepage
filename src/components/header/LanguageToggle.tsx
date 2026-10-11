@@ -36,7 +36,7 @@ export const LanguageToggle = ({
           aria-pressed={language === option}
           className={cn(
             'rounded font-medium transition-all',
-            mobile ? 'px-3 py-1.5 text-sm' : 'px-2 py-1 text-xs',
+            mobile ? 'min-h-11 min-w-11 px-3 text-sm' : 'px-2 py-1 text-xs',
             language === option
               ? 'bg-primary text-primary-foreground'
               : inactiveStyle,
