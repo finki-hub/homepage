@@ -6,7 +6,7 @@ import { useTheme } from '@/hooks/useTheme';
 import { DISCORD_URL, GITHUB_URL } from '@/lib/constants';
 
 import { ActionLink } from './header/ActionLink';
-import { LanguageToggle } from './header/LanguageToggle';
+import { LanguageSelect } from './header/LanguageSelect';
 import { LearnifyButton } from './header/LearnifyButton';
 import { ThemeToggleButton } from './header/ThemeToggleButton';
 import { DiscordIcon } from './icons/DiscordIcon';
@@ -91,8 +91,8 @@ export const Header = () => {
               icon={<GithubIcon className="w-4 h-4" />}
               label={<span className="hidden xl:inline">GitHub</span>}
             />
-            <LanguageToggle
-              groupLabel={t.nav.languageGroup}
+            <LanguageSelect
+              label={t.nav.languageGroup}
               language={language}
               setLanguage={setLanguage}
             />
@@ -172,8 +172,8 @@ export const Header = () => {
                 label="GitHub"
               />
             </div>
-            <LanguageToggle
-              groupLabel={t.nav.languageGroup}
+            <LanguageSelect
+              label={t.nav.languageGroup}
               language={language}
               mobile
               setLanguage={setLanguage}
