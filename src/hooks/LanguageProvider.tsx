@@ -1,6 +1,7 @@
 import { type ReactNode, useEffect, useMemo, useState } from 'react';
 
 import { type Language, translations } from '@/lib/i18n';
+import { updatePageMetadata } from '@/lib/page-metadata';
 import { readBrowserStorage, writeBrowserStorage } from '@/lib/safe-storage';
 
 import { LanguageContext } from './LanguageContext';
@@ -21,7 +22,7 @@ export const LanguageProvider = ({
   };
 
   useEffect(() => {
-    document.documentElement.lang = language;
+    updatePageMetadata(language, document);
   }, [language]);
 
   const t = translations[language];

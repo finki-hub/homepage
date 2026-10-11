@@ -62,6 +62,11 @@ export const translations = {
       title: 'FINKI Hub',
       titleAccent: 'independent student organization',
     },
+    metadata: {
+      description:
+        'An independent student organization building tools and resources for students of FINKI.',
+      title: 'FINKI Hub',
+    },
     // Header
     nav: {
       closeMenu: 'Close menu',
@@ -249,6 +254,11 @@ export const translations = {
         'Студентска иницијатива која гради алатки и ресурси за студентите на ФИНКИ. Од студенти, за студенти.',
       title: 'ФИНКИ Хаб',
       titleAccent: 'независна студентска организација',
+    },
+    metadata: {
+      description:
+        'Независна студентска организација која гради алатки и ресурси за студентите на ФИНКИ.',
+      title: 'ФИНКИ Хаб',
     },
     // Header
     nav: {
