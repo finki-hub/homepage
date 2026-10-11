@@ -31,7 +31,7 @@ const dictionaries = {
       onlineLabel: 'Online now',
       openButton: 'Open in Discord',
       publicChannelsLabel: 'Public channels',
-      subtitle: 'The main student server for everything around FINKI',
+      subtitle: 'The main student server for everything around FCSE',
       title: 'Discord Community',
       totalMembersLabel: 'Members',
       voiceChannels: 'Voice channels',
@@ -52,7 +52,7 @@ const dictionaries = {
     footer: {
       copyright:
         '© {year} FINKI Hub. Independent student platform. All rights reserved.',
-      madeWith: 'Made with ❤️ for students of FINKI',
+      madeWith: 'Made with ❤️ for students of FCSE',
     },
     // Hero
     hero: {
@@ -61,13 +61,13 @@ const dictionaries = {
       cta: 'Explore Platforms',
       ctaSecondary: 'Join Discord',
       subtitle:
-        'A student initiative building tools and resources for students of FINKI. By students, for students.',
+        'A student initiative building tools and resources for students of FCSE. By students, for students.',
       title: 'FINKI Hub',
       titleAccent: 'independent student organization',
     },
     metadata: {
       description:
-        'An independent student organization building tools and resources for students of FINKI.',
+        'An independent student organization building tools and resources for students of FCSE.',
       title: 'FINKI Hub',
     },
     // Header
@@ -85,7 +85,7 @@ const dictionaries = {
       cards: [
         {
           description:
-            'An independent initiative led by students for students. Not officially affiliated with FINKI.',
+            'An independent initiative led by students for students. Not officially affiliated with FCSE.',
           title: 'Student Organization',
         },
         {
@@ -100,7 +100,7 @@ const dictionaries = {
         },
         {
           description:
-            'Stay up to date with the latest news, announcements, and events from FINKI.',
+            'Stay up to date with the latest news, announcements, and events from FCSE.',
           title: 'Latest Information',
         },
       ],
@@ -112,7 +112,7 @@ const dictionaries = {
       items: [
         {
           description:
-            'Browse detailed information about FINKI courses — syllabi, materials, and more.',
+            'Browse detailed information about FCSE courses — syllabi, materials, and more.',
           name: 'Courses',
           url: 'https://predmeti.finki-hub.com',
         },
@@ -124,19 +124,19 @@ const dictionaries = {
         },
         {
           description:
-            'Watch recorded lectures and study sessions for FINKI courses.',
+            'Watch recorded lectures and study sessions for FCSE courses.',
           name: 'Recordings',
           url: 'https://snimki.finki-hub.com',
         },
         {
           description:
-            'Browse current and historical FINKI class timetables in one place.',
+            'Browse current and historical FCSE class timetables in one place.',
           name: 'Schedules',
           url: 'https://rasporedi.finki-hub.com',
         },
         {
           description:
-            'Private tutoring and guided study support for FINKI students.',
+            'Private tutoring and guided study support for FCSE students.',
           name: 'Learnify',
           url: 'https://learnify.mk',
         },
@@ -152,7 +152,7 @@ const dictionaries = {
           url: 'https://chat.finki-hub.com',
         },
       ],
-      subtitle: 'Web platforms built for students of FINKI',
+      subtitle: 'Web platforms built for students of FCSE',
       title: 'Platforms',
       visitButton: 'Visit',
     },
@@ -162,9 +162,9 @@ const dictionaries = {
       items: [
         {
           description:
-            'The core system - scrapes public FINKI pages and structures data.',
+            'The core system - scrapes public FCSE pages and structures data.',
           details:
-            'Automated collection of announcements, schedules, news, and other public information from FINKI websites.',
+            'Automated collection of announcements, schedules, news, and other public information from FCSE websites.',
           name: 'services-scraper',
           tags: ['Node.js', 'TypeScript'],
         },
