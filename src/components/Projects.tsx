@@ -27,7 +27,7 @@ export const Projects = () => {
 
   return (
     <section
-      className="py-24"
+      className="py-16 md:py-24"
       id="projects"
     >
       <div className="container">

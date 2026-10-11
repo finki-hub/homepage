@@ -9,7 +9,7 @@ export const Contribute = () => {
 
   return (
     <section
-      className="py-24"
+      className="py-16 md:py-24"
       id="contribute"
     >
       <div className="container">

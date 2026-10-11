@@ -112,14 +112,17 @@ export const Header = () => {
           </div>
 
           <div className="flex items-center gap-2 lg:hidden">
-            <LearnifyButton pill />
+            <LearnifyButton
+              className="min-h-11"
+              pill
+            />
 
             {/* Mobile menu button */}
             <button
               aria-controls="mobile-navigation"
               aria-expanded={isMobileMenuOpen}
               aria-label={isMobileMenuOpen ? t.nav.closeMenu : t.nav.openMenu}
-              className="p-2 hover:bg-secondary rounded-lg transition-colors"
+              className="h-11 w-11 hover:bg-secondary rounded-lg transition-colors"
               onClick={() => {
                 setIsMobileMenuOpen(!isMobileMenuOpen);
               }}
@@ -140,10 +143,10 @@ export const Header = () => {
           hidden={!isMobileMenuOpen}
           id="mobile-navigation"
         >
-          <nav className="container py-4 flex flex-col gap-4">
+          <nav className="container py-4 flex flex-col gap-2">
             {navLinks.map((link) => (
               <a
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="flex min-h-11 items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
                 href={link.href}
                 key={link.href}
                 onClick={() => {
@@ -155,15 +158,15 @@ export const Header = () => {
             ))}
             <div className="grid grid-cols-3 gap-2 pt-4 border-t border-border">
               <ActionLink
-                className="flex-1 gap-2"
+                className="min-h-11 gap-2"
                 href={DISCORD_URL}
                 icon={<DiscordIcon className="w-4 h-4" />}
                 label={t.discord}
                 variant="default"
               />
-              <LearnifyButton />
+              <LearnifyButton className="min-h-11" />
               <ActionLink
-                className="flex-1 gap-2"
+                className="min-h-11 gap-2"
                 href={GITHUB_URL}
                 icon={<GithubIcon className="w-4 h-4" />}
                 label="GitHub"

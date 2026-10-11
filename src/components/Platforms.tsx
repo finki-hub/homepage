@@ -38,7 +38,7 @@ export const Platforms = () => {
 
   return (
     <section
-      className="py-24"
+      className="py-16 md:py-24"
       id="platforms"
     >
       <div className="container">

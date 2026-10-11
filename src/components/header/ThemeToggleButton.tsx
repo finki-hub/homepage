@@ -21,7 +21,7 @@ export const ThemeToggleButton = ({
     return (
       <button
         aria-label={toggleLabel}
-        className="flex items-center justify-between rounded-xl border border-border bg-background/70 px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent/60"
+        className="flex min-h-11 items-center justify-between rounded-xl border border-border bg-background/70 px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent/60"
         onClick={toggleTheme}
         type="button"
       >
