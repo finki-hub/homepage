@@ -217,7 +217,6 @@ test(
       initialize(key, {
         ...config,
         before_send: (event) => {
-          if (!event) return null;
           enriched.push(event);
           const beforeSend = config.before_send;
           const callbacks =
