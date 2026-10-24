@@ -6,10 +6,6 @@ import {
   DISCORD_WIDGET_API_URL,
 } from '../lib/constants.ts';
 
-type DiscordInvite = {
-  readonly approximate_member_count?: number;
-};
-
 type DiscordWidget = {
   readonly id: string;
   readonly instant_invite?: string;
@@ -95,6 +91,10 @@ export const fetchDiscordCommunity = async ({
           }
 
           try {
+            type DiscordInvite = {
+              readonly approximate_member_count?: number;
+            };
+
             const inviteData = (await response.json()) as DiscordInvite;
             const memberCount = inviteData.approximate_member_count;
             return typeof memberCount === 'number' &&

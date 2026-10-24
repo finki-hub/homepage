@@ -4,7 +4,7 @@ WORKDIR /app
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 
 COPY package.json package-lock.json ./
-RUN npm i --ignore-scripts
+RUN npm ci --ignore-scripts
 
 COPY . ./
 RUN npm run build
