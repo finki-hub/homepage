@@ -287,6 +287,13 @@ test(
               : (options ?? {}),
           ]);
         },
+        // SDK session-property enrichment parses URLs through an anchor, even
+        // with referrer/campaign persistence disabled. Keep the real parser and
+        // private inputs: the wire assertions must still prove sanitization.
+        createElement: (tag: string) => {
+          assert.equal(tag, 'a');
+          return new URL(PRIVATE_URL);
+        },
         referrer: PRIVATE_URL,
       },
       Element: Anchor,

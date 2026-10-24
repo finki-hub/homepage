@@ -4,8 +4,10 @@ export const GithubIcon = ({
   readonly className?: string;
 }) => (
   <svg
+    aria-hidden="true"
     className={className}
     fill="currentColor"
+    focusable="false"
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
   >

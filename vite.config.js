@@ -15,6 +15,20 @@ const revision = [process.env.CF_PAGES_COMMIT_SHA, process.env.GITHUB_SHA].find(
 );
 
 export default defineConfig({
+  build: {
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          groups: [
+            {
+              name: 'posthog',
+              test: /[/\\]node_modules[/\\]posthog-js[/\\]/u,
+            },
+          ],
+        },
+      },
+    },
+  },
   define: {
     'import.meta.env.VITE_APP_REVISION': JSON.stringify(revision ?? ''),
   },
